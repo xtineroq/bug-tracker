@@ -1,8 +1,14 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
+import LogIn from '../src/Components/LogIn'
+import './App.css';
 
 function App() {
-  return <Button color="primary">Hello World</Button>;
+  return (
+    <div className="App">
+      <LogIn />
+    </div>
+  );
 }
 
 export default App;

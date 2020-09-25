@@ -10,6 +10,6 @@ SERVER
 
 
 CLIENT
-- finalised wireframe
+- finalise wireframe
 - UX user journey
 - decide on UI design
