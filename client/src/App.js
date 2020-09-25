@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-import LogIn from '../src/Components/LogIn'
+import LogIn from '../src/Components/LogIn';
+import Board from '../src/Components/Board';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <LogIn />
+      <Board />
     </div>
   );
 }
