@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Form from '../Form';
 import Button from '@material-ui/core/Button';
-import { Link as RouterLink } from "react-router-dom";
 import './style.css';
 
 function Copyright() {
@@ -25,7 +24,7 @@ function Copyright() {
   );
 }
 
-export default function LogIn() {
+export default function SignUp() {
 
   return (
     <Grid container component="main" className="grid">
@@ -37,7 +36,7 @@ export default function LogIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
           <Form />
           <Button
@@ -47,20 +46,8 @@ export default function LogIn() {
             color="primary"
             className="submit"
           >
-            Sign In
+            Sign Up
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <RouterLink to="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </RouterLink>
-            </Grid>
-          </Grid>
           <Box mt={5}>
               <Copyright />
           </Box>
