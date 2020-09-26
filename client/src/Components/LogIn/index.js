@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Form from '../Form';
 import Button from '@material-ui/core/Button';
 import { Link as RouterLink } from "react-router-dom";
+import {signIn} from "../../Service/auth";
 import './style.css';
 
 function Copyright() {
@@ -27,6 +28,34 @@ function Copyright() {
 
 export default function LogIn() {
 
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
+
+  const handleEmailInput = (event) => {
+    setEmail(event.target.value);
+  }
+
+  const handlePasswordInput = (event) => {
+    setPassword(event.target.value);
+  }
+
+  const handleSubmit = () => {
+
+    console.log(email);
+    console.log(password);
+
+    if (email !== "" && password !== "") {
+      signIn(email, password);
+
+      console.log(email);
+      console.log(password);
+
+    } else {
+      console.log("both fields are required");
+    }
+
+  }
+
   return (
     <Grid container component="main" className="grid">
       <CssBaseline />
@@ -39,13 +68,13 @@ export default function LogIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Form />
+          <Form email={email} password={password} handleEmailInput={handleEmailInput} handlePasswordInput={handlePasswordInput}/>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className="submit"
+            onClick={handleSubmit}
           >
             Sign In
           </Button>
