@@ -1,32 +1,4 @@
-.grid {
-    height: 100vh;
-}
-
-.image {
-    background-image: url("../../Images/code.jpg");
-    background-repeat: no-repeat;
-    background-color: grey;
-    background-size: cover;
-    background-position: center;
-}
-
-.paper {
-    margin: spacing(8, 4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.avatar {
-    margin: spacing(1);
-    background-color: grey;
-}
-
 .form {
     width: 100%;
     margin-top: spacing(1);
-}
-
-.submit {
-    margin: spacing(3, 0, 2);
 }
