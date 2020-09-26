@@ -1,0 +1,21 @@
+.root ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+}
+
+.appBar {
+    border-bottom: 1px solid;
+}
+
+.toolbar {
+    flex-wrap: wrap;
+}
+
+.toolbarTitle {
+    flex-grow: 1;
+}
+
+.link {
+    padding-left: 2rem;
+}
