@@ -1,3 +1,8 @@
-.main {
-    background-color: darkgray;
+.root {
+    display: flex;
+    flex-direction: column;
+}
+
+.addBtn {
+    margin-top: 2rem;
 }
