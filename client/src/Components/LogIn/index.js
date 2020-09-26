@@ -41,14 +41,10 @@ export default function LogIn() {
 
   const handleSubmit = () => {
 
-    console.log(email);
-    console.log(password);
-
     if (email !== "" && password !== "") {
       signIn(email, password);
-
-      console.log(email);
-      console.log(password);
+      
+      console.log(email, password);
 
     } else {
       console.log("both fields are required");
