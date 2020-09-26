@@ -24,9 +24,11 @@ function App() {
           <Route path="/signup">
             <SignUp />
           </Route>
+          <Route path="/board" >
+            <Board />
+          </Route>
         </Switch>
       </Router>
-      <Board path="/board" />
     </div>
   );
 }
