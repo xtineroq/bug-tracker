@@ -1,3 +1,9 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .main {
-    background-color: darkgray;
+    margin-top: 2rem;
 }

@@ -26,7 +26,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-      <Board />
+      <Board path="/board" />
     </div>
   );
 }
