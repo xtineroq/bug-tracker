@@ -1,6 +1,7 @@
 import React from "react";
 import { logIn, logOut } from "../Service/auth";
 import { useHistory, useLocation } from "react-router-dom";
+import firebase from "firebase/app";
 
 /** Context for handling authentication */
 export const AuthContext = React.createContext({});
@@ -12,13 +13,18 @@ const LOGIN_ERROR_MESSAGE = "Invalid Username or Password";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGIN_FAILED = "LOGIN_ERROR";
 const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+const LOADING = "LOADING";
 
 /** Protected route */
 const BOARD_ROUTE = "/board";
 
+/** Routes */
+const ROOT_ROUTE = "/";
+
 /** Initial state */
 const initialState = {
   isAuthenticated: false,
+  loading: false,
   error: null,
 };
 
@@ -42,6 +48,11 @@ const AuthReducer = (state, action) => {
         isAuthenticated: false,
         error: null,
       };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     default:
       return state;
   }
@@ -56,6 +67,20 @@ export default ({ children }) => {
   const [state, dispatch] = React.useReducer(AuthReducer, initialState);
   const history = useHistory();
   const location = useLocation();
+
+  /** On every new/refreshed page
+   *  Check if user is already logged in
+   */
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch({
+          type: LOGIN_SUCCESS,
+        });
+        redirect(history, location, BOARD_ROUTE);
+      }
+    });
+  }, []);
 
   /** Login handler
    *  >uses firebase login service
@@ -85,6 +110,7 @@ export default ({ children }) => {
       dispatch({
         type: LOGOUT_SUCCESS,
       });
+      redirect(history, location, ROOT_ROUTE);
     } catch (err) {
       console.log(err);
     }
