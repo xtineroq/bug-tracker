@@ -10,9 +10,9 @@ import Box from "@material-ui/core/Box";
 import Form from "../Form";
 import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
-import { signIn } from "../../Service/auth";
 import "./style.css";
 import { AuthContext } from "../../Context/Auth";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function Copyright() {
   return (
@@ -28,7 +28,7 @@ function Copyright() {
 }
 
 export default () => {
-  const { loginHandler } = React.useContext(AuthContext);
+  const { loginHandler, isLoading } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
 
@@ -48,6 +48,20 @@ export default () => {
     }
   };
 
+  const loginButtonOrLoading = isLoading ? (
+    <CircularProgress size={30} thickness={4} />
+  ) : (
+    <Button
+      fullWidth
+      variant="contained"
+      color="primary"
+      className="submit"
+      onClick={handleSubmit}
+    >
+      Sign In
+    </Button>
+  );
+
   return (
     <Grid container component="main" className="grid">
       <CssBaseline />
@@ -66,15 +80,7 @@ export default () => {
             handleEmailInput={handleEmailInput}
             handlePasswordInput={handlePasswordInput}
           />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className="submit"
-            onClick={handleSubmit}
-          >
-            Sign In
-          </Button>
+          {loginButtonOrLoading}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
