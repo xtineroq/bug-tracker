@@ -38,6 +38,18 @@ app.use(cors());
 router.route("/").get((req, res) => {
   res.status(200).send({ message: "Bug Tracker Backend" });
 });
+
+/**
+ * @api {get} /secure Testing secured route
+ * @apiName GetSecure
+ * @apiGroup Secure
+ * @apiSuccess {String} message Returns a default message
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "message": "You're in!",
+ *     }
+ */
 router.route("/secure").get(loginRequired, (req, res) => {
   res.status(200).send({ message: "You're in!" });
 });
