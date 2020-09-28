@@ -1,56 +1,66 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Form from '../Form';
-import Button from '@material-ui/core/Button';
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Form from "../Form";
+import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
-import {signIn} from "../../Service/auth";
-import './style.css';
+import "./style.css";
+import { AuthContext } from "../../Context/Auth";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         BugTracker
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
-export default function LogIn() {
-
+export default () => {
+  const { loginHandler, isLoading } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
 
   const handleEmailInput = (event) => {
     setEmail(event.target.value);
-  }
+  };
 
   const handlePasswordInput = (event) => {
     setPassword(event.target.value);
-  }
+  };
 
   const handleSubmit = () => {
-
     if (email !== "" && password !== "") {
-      signIn(email, password);
-      
-      console.log(email, password);
-
+      loginHandler(email, password);
     } else {
       console.log("both fields are required");
     }
+  };
 
-  }
+  const loginButtonOrLoading = isLoading ? (
+    <CircularProgress size={30} thickness={4} />
+  ) : (
+    <Button
+      fullWidth
+      variant="contained"
+      color="primary"
+      className="submit"
+      onClick={handleSubmit}
+    >
+      Sign In
+    </Button>
+  );
 
   return (
     <Grid container component="main" className="grid">
@@ -64,16 +74,13 @@ export default function LogIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Form email={email} password={password} handleEmailInput={handleEmailInput} handlePasswordInput={handlePasswordInput}/>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className="submit"
-            onClick={handleSubmit}
-          >
-            Sign In
-          </Button>
+          <Form
+            email={email}
+            password={password}
+            handleEmailInput={handleEmailInput}
+            handlePasswordInput={handlePasswordInput}
+          />
+          {loginButtonOrLoading}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -87,10 +94,10 @@ export default function LogIn() {
             </Grid>
           </Grid>
           <Box mt={5}>
-              <Copyright />
+            <Copyright />
           </Box>
         </div>
       </Grid>
     </Grid>
   );
-}
+};

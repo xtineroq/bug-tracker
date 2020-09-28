@@ -2,14 +2,9 @@
 // must be listed before other Firebase SDKs
 import * as firebase from "firebase/app";
 
-const signIn = (email, password) => {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((result) => {
-        console.log(result);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
-}
+const logIn = (email, password) =>
+  firebase.auth().signInWithEmailAndPassword(email, password);
 
-export { signIn };
+const logOut = () => firebase.auth().signOut();
+
+export { logIn, logOut };
