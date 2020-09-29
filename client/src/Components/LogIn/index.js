@@ -29,7 +29,7 @@ function Copyright() {
 }
 
 export default () => {
-  const { loginHandler, isLoading } = React.useContext(AuthContext);
+  const { loginHandler, isLoading, error } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [emailError, setEmailError] = React.useState(false);
@@ -95,6 +95,9 @@ export default () => {
             isEmailValid={emailError}
             isPasswordValid={passwordError}
           />
+          <Typography variant="subtitle2" color="error">
+            {error}
+          </Typography>
           {loginButtonOrLoading}
           <Grid container>
             <Grid item xs>
