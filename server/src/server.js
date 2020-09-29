@@ -4,7 +4,7 @@ const compress = require("compression");
 const cors = require("cors");
 const helmet = require("helmet");
 const { firebaseAdminInitializeApp } = require("./service/firebase");
-const { loginRequired } = require("./middleware/auth");
+const { firebaseLoginRequired } = require("./middleware/auth");
 
 /** Load environment variables */
 require("dotenv").config();
@@ -50,7 +50,7 @@ router.route("/").get((req, res) => {
  *       "message": "You're in!",
  *     }
  */
-router.route("/secure").get(loginRequired, (req, res) => {
+router.route("/secure").get(firebaseLoginRequired, (req, res) => {
   res.status(200).send({ message: "You're in!" });
 });
 
