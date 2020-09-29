@@ -35,7 +35,7 @@ const fullUrl = (req) => {
 };
 
 /** Middleware protecting routes from unauthorized access */
-exports.loginRequired = async (req, res, next) => {
+exports.firebaseLoginRequired = async (req, res, next) => {
   try {
     const idToken = getIdTokenFromHeader(req.headers);
     const decodedToken = await admin.auth().verifyIdToken(idToken);
