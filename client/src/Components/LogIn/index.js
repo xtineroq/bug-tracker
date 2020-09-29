@@ -13,6 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 import "./style.css";
 import { AuthContext } from "../../Context/Auth";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { userSchema } from "../../validation";
 
 function Copyright() {
   return (
@@ -31,20 +32,31 @@ export default () => {
   const { loginHandler, isLoading } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
+  const [emailError, setEmailError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState(false);
 
   const handleEmailInput = (event) => {
+    setEmailError(false); // Reset error on input change
     setEmail(event.target.value);
   };
 
   const handlePasswordInput = (event) => {
+    setPasswordError(false); // Reset error on input change
     setPassword(event.target.value);
   };
 
   const handleSubmit = () => {
-    if (email !== "" && password !== "") {
+    try {
+      /** Validation of inputs */
+      userSchema.validateSync({ email, password }, { abortEarly: false });
       loginHandler(email, password);
-    } else {
-      console.log("both fields are required");
+    } catch (err) {
+      /** Set errors on local state */
+      const { errors } = err;
+      for (const message of errors) {
+        if (message.includes("Email")) setEmailError(true);
+        if (message.includes("Password")) setPasswordError(true);
+      }
     }
   };
 
@@ -52,6 +64,7 @@ export default () => {
     <CircularProgress size={30} thickness={4} />
   ) : (
     <Button
+      disabled={emailError || passwordError} // Disable button if any error is true
       fullWidth
       variant="contained"
       color="primary"
@@ -79,6 +92,8 @@ export default () => {
             password={password}
             handleEmailInput={handleEmailInput}
             handlePasswordInput={handlePasswordInput}
+            isEmailValid={emailError}
+            isPasswordValid={passwordError}
           />
           {loginButtonOrLoading}
           <Grid container>
