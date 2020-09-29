@@ -90,16 +90,17 @@ export default ({ children }) => {
   const loginHandler = async (email, password) => {
     try {
       dispatch({ type: LOADING, payload: true });
-      const res = await logIn(email, password);
+      await logIn(email, password);
       dispatch({
         type: LOGIN_SUCCESS,
       });
-      redirect(history, location, BOARD_ROUTE);
       dispatch({ type: LOADING, payload: false });
+      redirect(history, location, BOARD_ROUTE);
     } catch {
       dispatch({
         type: LOGIN_FAILED,
       });
+      dispatch({ type: LOADING, payload: false });
     }
   };
 
@@ -121,6 +122,7 @@ export default ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        error: state.error,
         isAuthenticated: state.isAuthenticated,
         isLoading: state.loading,
         loginHandler,
