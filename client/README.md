@@ -1,11 +1,25 @@
 ## Bug tracker client
 
+https://bug-tracker-80c07.web.app/
+
 Getting Started
 
 - Run the app in development: `npm run start`
 
 - Building for production: `npm run build`
 
-A. Firebase
+- Run prod build: `npm run start:prod`
 
-1. Restrict who can use the api keys on https://console.developers.google.com/apis/credentials
+A. Firebase Setup
+
+- Restrict who can use the api keys on https://console.developers.google.com/apis/credentials
+
+b. Setup firebase hosting:
+
+- Login to firebaese: `firebase login`
+
+- Create Manually files: _.firebaserc_ and _firebase.json_
+
+- Or automatically create those files with: `firebase init` and follow instructions.
+
+B. Deployment and Hosting to Firebase: `npm run deploy`
