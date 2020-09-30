@@ -1,21 +1,22 @@
-/** We cant use this import method unless we use Babel */
-// import express from "express";
-// import morgan from "morgan";
-// import compress from "compression";
-// import cors from "cors";
-// import helmet from "helmet";
-
 const express = require("express");
 const morgan = require("morgan");
 const compress = require("compression");
 const cors = require("cors");
 const helmet = require("helmet");
+const { firebaseAdminInitializeApp } = require("./service/firebase");
+const { firebaseLoginRequired } = require("./middleware/auth");
+
+/** Load environment variables */
+require("dotenv").config();
 
 /** Express instance */
 const app = express();
 
 /** Router instance */
 router = express.Router();
+
+/** Firebase admin */
+firebaseAdminInitializeApp();
 
 /** Parameters formats: dev|combined */
 app.use(morgan("dev"));
@@ -38,12 +39,28 @@ router.route("/").get((req, res) => {
   res.status(200).send({ message: "Bug Tracker Backend" });
 });
 
+/**
+ * @api {get} /secure Testing secured route
+ * @apiName GetSecure
+ * @apiGroup Secure
+ * @apiPermission Authenticated
+ * @apiSuccess {String} message Returns a default message
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "message": "You're in!",
+ *     }
+ */
+router.route("/secure").get(firebaseLoginRequired, (req, res) => {
+  res.status(200).send({ message: "You're in!" });
+});
+
 /** Attach route */
 app.use(router);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`);
+  console.log(`Listening at http://localhost:${PORT}`);
 });
 
 module.exports = app;
