@@ -21,8 +21,10 @@
     "yup": "^0.29.3"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
+    "start": "react-scripts start",
+    "start:prod": "npm run build && serve -s build",
+    "deploy": "npm run build && firebase deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -40,5 +42,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "firebase-tools": "^8.11.2",
+    "serve": "^11.3.2"
   }
 }
