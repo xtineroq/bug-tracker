@@ -10,7 +10,7 @@ const userSchema = object().shape({
     .required("Password is required")
     .when("$method", (method, schema) => {
       return method === VALIDATE_SIGNUP
-        ? schema.min(8, "Password should be atleast 8 characters")
+        ? schema.min(8, "Password should be at least 8 characters.")
         : schema;
     }),
 });
