@@ -38,6 +38,8 @@ const fullUrl = (req) => {
 exports.firebaseLoginRequired = async (req, res, next) => {
   try {
     const idToken = getIdTokenFromHeader(req.headers);
+
+    // check if user exists
     const decodedToken = await admin.auth().verifyIdToken(idToken);
     req.auth = decodedToken;
     return next();
@@ -49,6 +51,8 @@ exports.firebaseLoginRequired = async (req, res, next) => {
       message,
       status: 400,
     };
+
+    // return header to client
     const bearer = `Bearer realm=${fullUrl(req)}`;
     res.setHeader("WWW-Authenticate", bearer);
     return res.status(error.status).send(error);

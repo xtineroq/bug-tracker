@@ -13,7 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 import "./style.css";
 import { AuthContext } from "../../Context/Auth";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { userSchema } from "../../validation";
+import { userSchema, VALIDATE_SIGNUP } from "../../validation";
 
 function Copyright() {
   return (

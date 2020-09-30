@@ -1,5 +1,5 @@
 import React from "react";
-import { logIn, logOut } from "../Service/auth";
+import { logIn, logOut, signUp } from "../Service/auth";
 import { useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase/app";
 
@@ -7,11 +7,14 @@ import firebase from "firebase/app";
 export const AuthContext = React.createContext({});
 
 /** Error messages */
-const LOGIN_ERROR_MESSAGE = "Invalid Username or Password";
+const LOGIN_ERROR_MESSAGE = "Invalid Email Address or Password";
+const SIGNUP_ERROR_MESSAGE = "User Already Exists";
 
 /** Action types */
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGIN_FAILED = "LOGIN_ERROR";
+const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+const SIGNUP_FAILED = "SIGNUP_ERROR";
 const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 const LOADING = "LOADING";
 
@@ -24,6 +27,7 @@ const ROOT_ROUTE = "/";
 /** Initial state */
 const initialState = {
   isAuthenticated: false,
+  userDoesNotExist: true,
   loading: false,
   error: null,
 };
@@ -42,6 +46,18 @@ const AuthReducer = (state, action) => {
         isAuthenticated: false,
         error: LOGIN_ERROR_MESSAGE,
       };
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        userDoesNotExist: true,
+        error: null,
+      }
+    case SIGNUP_FAILED:
+      return {
+        ...state,
+        userDoesNotExist: failed,
+        error: SIGNUP_ERROR_MESSAGE,
+      }
     case LOGOUT_SUCCESS:
       return {
         ...state,
@@ -104,6 +120,28 @@ export default ({ children }) => {
     }
   };
 
+  /** Signup handler
+   *  >uses firebase signup service
+   *  >dispatches signup success
+   *  >redirects to /board
+   */
+  const signupHandler = async (email, password) => {
+    try {
+      dispatch({ type: LOADING, payload: true });
+      await signUp(email, password);
+      dispatch({
+        type: SIGNUP_SUCCESS,
+      });
+      dispatch({ type: LOADING, payload: false });
+      redirect(history, location, BOARD_ROUTE);
+    } catch {
+      dispatch({
+        type: SIGNUP_FAILED,
+      });
+      dispatch({ type: LOADING, payload: false });
+    }
+  };
+
   /** Logout handler
    *  Redirects to /login
    */
@@ -127,6 +165,7 @@ export default ({ children }) => {
         isLoading: state.loading,
         loginHandler,
         logoutHandler,
+        signupHandler
       }}
     >
       {children}

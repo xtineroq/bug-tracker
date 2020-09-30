@@ -43,7 +43,7 @@ router.route("/").get((req, res) => {
  * @api {get} /secure Testing secured route
  * @apiName GetSecure
  * @apiGroup Secure
- * @apiPermission Athenticated
+ * @apiPermission Authenticated
  * @apiSuccess {String} message Returns a default message
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
