@@ -55,7 +55,7 @@ const AuthReducer = (state, action) => {
     case SIGNUP_FAILED:
       return {
         ...state,
-        userDoesNotExist: failed,
+        userDoesNotExist: false,
         error: SIGNUP_ERROR_MESSAGE,
       }
     case LOGOUT_SUCCESS:

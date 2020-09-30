@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Form from '../Form';
 import Button from '@material-ui/core/Button';
+import { Link as RouterLink } from "react-router-dom";
 import './style.css';
 import { AuthContext } from "../../Context/Auth";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -30,7 +31,7 @@ function Copyright() {
 
 export default function SignUp() {
 
-  const { loginHandler, isLoading, error } = React.useContext(AuthContext);
+  const { signupHandler, isLoading } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [emailError, setEmailError] = React.useState(false);
