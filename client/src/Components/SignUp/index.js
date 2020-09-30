@@ -9,7 +9,12 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Form from '../Form';
 import Button from '@material-ui/core/Button';
+import { Link as RouterLink } from "react-router-dom";
 import './style.css';
+import { AuthContext } from "../../Context/Auth";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { userSchema, VALIDATE_SIGNUP } from "../../validation";
+
 
 function Copyright() {
   return (
@@ -26,6 +31,53 @@ function Copyright() {
 
 export default function SignUp() {
 
+  const { signupHandler, isLoading } = React.useContext(AuthContext);
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [emailError, setEmailError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState(false);
+
+  const handleEmailInput = (event) => {
+    setEmailError(false); // Reset error on input change
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordInput = (event) => {
+    setPasswordError(false); // Reset error on input change
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    try {
+      /** Validation of inputs */
+      userSchema.validateSync({ email, password }, { context: {method: VALIDATE_SIGNUP}, abortEarly: false });
+      signupHandler(email, password);
+    } catch (err) {
+      /** Set errors on local state */
+      const { errors } = err;
+      for (const message of errors) {
+        if (message.includes("Email")) setEmailError(true);
+        if (message.includes("Password")) setPasswordError(true);
+      }
+    }
+  };
+
+  /** switch signup button to circular progress */
+  const signupButtonOrLoading = isLoading ? (
+    <CircularProgress size={30} thickness={4} />
+  ) : (
+    <Button
+      disabled={emailError || passwordError} // Disable button if any error is true
+      fullWidth
+      variant="contained"
+      color="primary"
+      className="submit"
+      onClick={handleSubmit}
+    >
+      Sign Up
+    </Button>
+  );
+
   return (
     <Grid container component="main" className="grid">
       <CssBaseline />
@@ -38,16 +90,22 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Form />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className="submit"
-          >
-            Sign Up
-          </Button>
+          <Form
+            email={email}
+            password={password}
+            handleEmailInput={handleEmailInput}
+            handlePasswordInput={handlePasswordInput}
+            isEmailValid={emailError}
+            isPasswordValid={passwordError}
+          />
+          {signupButtonOrLoading}
+          <Grid container>
+            <Grid item>
+              <RouterLink to="/" variant="body2">
+                {"Already have an account? Sign In"}
+              </RouterLink>
+            </Grid>
+          </Grid>
           <Box mt={5}>
               <Copyright />
           </Box>

@@ -5,6 +5,9 @@ import * as firebase from "firebase/app";
 const logIn = (email, password) =>
   firebase.auth().signInWithEmailAndPassword(email, password);
 
+const signUp = (email, password) =>
+firebase.auth().createUserWithEmailAndPassword(email, password);
+
 const logOut = () => firebase.auth().signOut();
 
-export { logIn, logOut };
+export { logIn, logOut, signUp };
