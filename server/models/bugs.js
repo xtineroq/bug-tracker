@@ -18,10 +18,20 @@ const BugSchema = new Schema({
         required: true
     },
     status: {
-        type: String
+        type: String,
+        required: true
     },
     priority: {
-        type: String
+        type: String,
+        required: true
+    },
+    assigneeId: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    reporterId: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     }
 });
 
