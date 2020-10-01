@@ -104,8 +104,8 @@ export default function SignUp() {
             isPasswordValid={passwordError}
           />
           {/* Display all validation error messages */}
-          {errorMessages.map((err) => (
-            <Typography variant="subtitle2" color="error">
+          {errorMessages.map((err, index) => (
+            <Typography key={index} variant="subtitle2" color="error">
               {err}
             </Typography>
           ))}
