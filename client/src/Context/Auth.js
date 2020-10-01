@@ -27,7 +27,6 @@ const ROOT_ROUTE = "/";
 /** Initial state */
 const initialState = {
   isAuthenticated: false,
-  userDoesNotExist: true,
   loading: false,
   error: null,
 };
