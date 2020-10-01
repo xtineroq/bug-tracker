@@ -1,56 +1,60 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Form from '../Form';
-import Button from '@material-ui/core/Button';
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Form from "../Form";
+import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
-import './style.css';
+import "./style.css";
 import { AuthContext } from "../../Context/Auth";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { userSchema, VALIDATE_SIGNUP } from "../../validation";
 
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         BugTracker
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 export default function SignUp() {
-
-  const { signupHandler, isLoading } = React.useContext(AuthContext);
+  const { signupHandler, isLoading, error } = React.useContext(AuthContext);
+  const [errorMessages, setErrorMessages] = React.useState([]);
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [emailError, setEmailError] = React.useState(false);
   const [passwordError, setPasswordError] = React.useState(false);
 
   const handleEmailInput = (event) => {
-    setEmailError(false); // Reset error on input change
+    /** Reset error message */
+    setEmailError(false);
     setEmail(event.target.value);
   };
 
   const handlePasswordInput = (event) => {
-    setPasswordError(false); // Reset error on input change
+    /** Reset error message */
+    setPasswordError(false);
     setPassword(event.target.value);
   };
 
   const handleSubmit = () => {
     try {
       /** Validation of inputs */
-      userSchema.validateSync({ email, password }, { context: {method: VALIDATE_SIGNUP}, abortEarly: false });
+      userSchema.validateSync(
+        { email, password },
+        { context: { method: VALIDATE_SIGNUP }, abortEarly: false }
+      );
       signupHandler(email, password);
     } catch (err) {
       /** Set errors on local state */
@@ -59,6 +63,7 @@ export default function SignUp() {
         if (message.includes("Email")) setEmailError(true);
         if (message.includes("Password")) setPasswordError(true);
       }
+      setErrorMessages(errors);
     }
   };
 
@@ -98,6 +103,16 @@ export default function SignUp() {
             isEmailValid={emailError}
             isPasswordValid={passwordError}
           />
+          {/* Display all validation error messages */}
+          {errorMessages.map((err) => (
+            <Typography variant="subtitle2" color="error">
+              {err}
+            </Typography>
+          ))}
+          {/*  Display sign up error message */}
+          <Typography variant="subtitle2" color="error">
+            {error}
+          </Typography>
           {signupButtonOrLoading}
           <Grid container>
             <Grid item>
@@ -107,7 +122,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Box mt={5}>
-              <Copyright />
+            <Copyright />
           </Box>
         </div>
       </Grid>

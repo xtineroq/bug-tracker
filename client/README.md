@@ -16,7 +16,7 @@ A. Firebase Setup
 
 b. Setup firebase hosting:
 
-- Login to firebaese: `firebase login`
+- Login to firebase: `firebase login`
 
 - Create Manually files: _.firebaserc_ and _firebase.json_
 
