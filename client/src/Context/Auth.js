@@ -49,15 +49,13 @@ const AuthReducer = (state, action) => {
     case SIGNUP_SUCCESS:
       return {
         ...state,
-        userDoesNotExist: true,
         error: null,
-      }
+      };
     case SIGNUP_FAILED:
       return {
         ...state,
-        userDoesNotExist: false,
         error: SIGNUP_ERROR_MESSAGE,
-      }
+      };
     case LOGOUT_SUCCESS:
       return {
         ...state,
@@ -165,7 +163,7 @@ export default ({ children }) => {
         isLoading: state.loading,
         loginHandler,
         logoutHandler,
-        signupHandler
+        signupHandler,
       }}
     >
       {children}
