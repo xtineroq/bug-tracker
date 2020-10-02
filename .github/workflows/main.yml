@@ -22,7 +22,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install dependency
-        run: npm i
+        run: node --version
 
       # Runs a set of commands using the runners shell
 #       - name: Run a multi-line script
