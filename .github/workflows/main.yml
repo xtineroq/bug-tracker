@@ -39,6 +39,7 @@ jobs:
           name: build
           path: ./client/build
   deploy:
+     needs: build
      runs-on: ubuntu-latest
      # Build production files and deploy to Firebase hosting
      steps:
