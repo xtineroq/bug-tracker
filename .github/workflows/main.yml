@@ -20,10 +20,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      # Runs a single command using the runners shell
-      - name: Install dependency
+      - name: Set node version
         uses: actions/setup-node@v1
         with:
           node-version: "v12.18.4"
-      - working-directory: ./client
-      - run: npm ci
+      - name: Install dependency
+        working-directory: ./client
+        run: npm ci
