@@ -31,11 +31,11 @@ jobs:
       # Create build directory
 #       - run: npm run build
       # Upload artifact to be shared by jobs
-      - name: Upload artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: build
-          path: ./client/build
+#       - name: Upload artifact
+#         uses: actions/upload-artifact@master
+#         with:
+#           name: build
+#           path: ./client/build
 #   deploy:
 #      runs-on: ubuntu-latest
 #      # Build production files and deploy to Firebase hosting
