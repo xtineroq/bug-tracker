@@ -29,26 +29,28 @@ jobs:
         working-directory: ./client
         run: npm ci
       # Create build directory
-      - run: npm run build
+      - name: Create build
+        working-directory: ./client
+        run: npm run build
       # Upload artifact to be shared by jobs
       - name: Upload artifact
         uses: actions/upload-artifact@master
         with:
           name: build
           path: ./client/build
-#   deploy:
-#      runs-on: ubuntu-latest
-#      # Build production files and deploy to Firebase hosting
-#      steps:
-#        - name: Checkout repo master
-#          uses: actions/checkout@v2
-#        - name: Download Artifact
-#          uses: actions/download-artifact@master
-#          with:
-#           name: build
-#        - name: Deploy to Firebase
-#          uses: w9jds/firebase-action@master
-#          with:
-#           args: deploy --only hosting
-#          env:
-#           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  deploy:
+     runs-on: ubuntu-latest
+     # Build production files and deploy to Firebase hosting
+     steps:
+       - name: Checkout repo master
+         uses: actions/checkout@v2
+       - name: Download Artifact
+         uses: actions/download-artifact@master
+         with:
+          name: build
+       - name: Deploy to Firebase
+         uses: w9jds/firebase-action@master
+         with:
+          args: deploy --only hosting
+         env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
