@@ -24,8 +24,12 @@ b. Setup firebase hosting:
 
 B. Deployment and Hosting to Firebase: `npm run deploy`
 
-C. Getting Ci tokens:
+C. Getting CI tokens:
 
 a. `npm run firebase login:ci` - for firebase installed as dependency or dev dependency
 
 b. `firebase login:ci` - for firebase installed as global package
+
+c. Follow the link provided to login.
+
+d. After successful login, it will print the token in the terminal. Use the token for CI environment.
