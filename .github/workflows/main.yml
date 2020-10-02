@@ -25,5 +25,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "v12.18.4"
-      - run: cd client
+      - working-directory: ./client
       - run: npm ci
