@@ -93,7 +93,7 @@ export default ({ children }) => {
         redirect(history, location, BOARD_ROUTE);
       }
     });
-  }, []);
+  });
 
   /** Login handler
    *  >uses firebase login service
