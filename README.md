@@ -2,19 +2,6 @@
 
 Monash University Bootcamp Project 3
 
-To do:
-
-SERVER
-
-- set up firebase server side
-- set up API routes
-- db containing schema and seeds
-
-CLIENT
-
-- routing
-- sign up function
-- 
 
 Getting Started
 
