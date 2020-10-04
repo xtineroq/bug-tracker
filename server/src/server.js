@@ -5,15 +5,13 @@ const cors = require("cors");
 const helmet = require("helmet");
 const { firebaseAdminInitializeApp } = require("./service/firebase");
 const { firebaseLoginRequired } = require("./middleware/auth");
+const router = require("./routes");
 
 /** Load environment variables */
 require("dotenv").config();
 
 /** Express instance */
 const app = express();
-
-/** Router instance */
-router = express.Router();
 
 /** Firebase admin */
 firebaseAdminInitializeApp();
@@ -33,27 +31,6 @@ app.use(helmet());
 
 /** Enable CORS - Cross Origin Resource Sharing */
 app.use(cors());
-
-/** Sanity check */
-router.route("/").get((req, res) => {
-  res.status(200).send({ message: "Bug Tracker Backend" });
-});
-
-/**
- * @api {get} /secure Testing secured route
- * @apiName GetSecure
- * @apiGroup Secure
- * @apiPermission Authenticated
- * @apiSuccess {String} message Returns a default message
- * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "message": "You're in!",
- *     }
- */
-router.route("/secure").get(firebaseLoginRequired, (req, res) => {
-  res.status(200).send({ message: "You're in!" });
-});
 
 /** Attach route */
 app.use(router);

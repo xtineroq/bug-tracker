@@ -1,23 +1,12 @@
 const db = require("../models");
-const axios = require("axios");
 
 module.exports = {
-  // getUser ID from backend
-  getUser: (req, res) => {
-    axios
-      .get("/user?ID=") // need to know the correct route
-      .then((response) => {
-        console.log(response);
-        res.json(response.data);
-      })
-      .catch((err) => res.status(422).json(err));
-  },
   // find all bugs saved in db
   findAll: (req, res) => {
-    db.Bug.find(req.query)
+    db.Bug.find()
       .then((dbModel) => {
-        res.json(dbModel);
         console.log(dbModel);
+        res.json(dbModel);
       })
       .catch((err) => res.status(422).json(err));
   },
@@ -39,7 +28,7 @@ module.exports = {
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
-  // delete bug from dd
+  // delete bug from db
   remove: (req, res) => {
     db.Book.findById({ _id: req.params.id })
       .then((dbModel) => dbModel.remove())
