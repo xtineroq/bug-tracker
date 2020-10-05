@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const { firebaseAdminInitializeApp } = require("./service/firebase");
 const { firebaseLoginRequired } = require("./middleware/auth");
 const router = require("./routes");
+const mongoose = require("mongoose");
 
 /** Load environment variables */
 require("dotenv").config();
@@ -34,6 +35,14 @@ app.use(cors());
 
 /** Attach route */
 app.use(router);
+
+/** Connected to MongoDB Atlas */
+mongoose.connect("mongodb://localhost/bugTracker", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
