@@ -12,7 +12,7 @@ Getting Started
 
 A. Firebase Setup
 
-- Restrict who can use the api keys on https://console.developers.google.com/apis/credentials
+a. Restrict who can use the api keys on https://console.developers.google.com/apis/credentials
 
 b. Setup firebase hosting:
 
@@ -23,3 +23,13 @@ b. Setup firebase hosting:
 - Or automatically create those files with: `firebase init` and follow instructions.
 
 B. Deployment and Hosting to Firebase: `npm run deploy`
+
+C. Getting CI tokens:
+
+a. `npm run firebase login:ci` - for firebase installed as dependency or dev dependency
+
+b. `firebase login:ci` - for firebase installed as global package
+
+c. Follow the link provided to login.
+
+d. After successful login, it will print the token in the terminal. Use the token for CI environment.
