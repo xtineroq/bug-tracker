@@ -3,8 +3,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 import NavBar from "../NavBar";
 import Footer from "../Footer";
+import BugCard from "../BugCard";
 import "./style.css";
-// import Container from "@material-ui/core/Container";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TicketForm from '../TicketForm';
@@ -38,6 +38,7 @@ export default function Board() {
                   <Typography className="panel-title" style={{ fontSize: "14px" }}>
                     BACKLOG
                   </Typography>
+                  <BugCard />
                 </Paper>
               </Grid>
               <Grid item xs>

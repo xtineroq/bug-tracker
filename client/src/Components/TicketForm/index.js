@@ -4,10 +4,10 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import AddIcon from '@material-ui/icons/Add';
+import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import "./style.css";
 
@@ -24,10 +24,28 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 4, 3, 4),
+    outline: "none"
   },
   textarea: {
-    width: "100%"
+    marginTop: "1rem",
+    width: "100%",
+    fontFamily: "inherit",
+    fontSize: "16px",
+    lineHeight: "1.5"
+  },
+  label: {
+    paddingTop: "1rem"
+  },
+  selectBox: {
+    width: "20%"
+  },
+  btnBox: {
+    paddingTop: "2rem",
+    paddingBottom: "1rem",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 }));
 
@@ -71,40 +89,45 @@ function TicketForm({ children }) {
           // onChange={}
           autoFocus
         />
-        <FormControlLabel
-          control={
-            <TextareaAutosize
-              rowsMin={3}
-              margin="normal"
-              required
-              name="summary"
-              // onChange={}
-              label="Summary"
-              id="summary"
-              placeholder="Issue Summary"
-            />
-          }
+        <TextareaAutosize
+          rowsMin={3}
+          margin="normal"
+          className={classes.textarea}
+          required
+          name="summary"
+          // onChange={}
+          label="Summary"
+          id="summary"
+          placeholder="Issue Summary"
         />
-        <InputLabel id="stage">Status</InputLabel>
-        <Select labelId="stage" id="stage">
+        <InputLabel id="stage" className={classes.label} required>Status</InputLabel>
+        <Select labelId="stage" id="stage" className={classes.selectBox}>
           <MenuItem value={1}>Backlog</MenuItem>
           <MenuItem value={2}>To Do</MenuItem>
           <MenuItem value={3}>In Progress</MenuItem>
         </Select>
-        <InputLabel id="priority">Priority</InputLabel>
-        <Select labelId="priority" id="priority">
+        <InputLabel id="priority" className={classes.label} required>Priority</InputLabel>
+        <Select labelId="priority" id="priority" className={classes.selectBox}>
           <MenuItem value={1}>Blocker</MenuItem>
           <MenuItem value={2}>Critical</MenuItem>
           <MenuItem value={3}>Major</MenuItem>
           <MenuItem value={3}>Minor</MenuItem>
           <MenuItem value={3}>Trivial</MenuItem>
         </Select>
-        <InputLabel id="assignee">Assignee</InputLabel>
-        <Select labelId="assignee" id="assignee">
+        <InputLabel id="assignee" className={classes.label} required>Assignee</InputLabel>
+        <Select labelId="assignee" id="assignee" className={classes.selectBox}>
           <MenuItem value={1}>User1</MenuItem>
           <MenuItem value={2}>User2</MenuItem>
           <MenuItem value={3}>User3</MenuItem>
         </Select>
+        <Box className={classes.btnBox}>
+          <Button variant="contained" color="secondary">
+            Cancel
+          </Button>
+          <Button variant="contained" color="secondary">
+            Save
+          </Button>
+        </Box>
       </form>
       </div>
     </Modal>
