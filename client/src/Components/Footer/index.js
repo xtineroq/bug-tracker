@@ -6,9 +6,9 @@ import './style.css';
 
 function Copyright() {
     return (
-      <Typography variant="body2" color="textSecondary" align="center">
+      <Typography variant="body2" align="center" style={{color: "#cccccc"}}>
         {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
+        <Link href="https://material-ui.com/" style={{color: "#cccccc"}}>
             BugTracker
         </Link>{' '}
         {new Date().getFullYear()}
