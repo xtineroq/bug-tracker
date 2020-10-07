@@ -1,8 +1,33 @@
 .root {
     display: flex;
     flex-direction: column;
+    background-color: #00334d;
+}
+
+.main {
+    padding: 2rem;
 }
 
 .addBtn {
     margin-top: 2rem;
+}
+
+.panel-container {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+.panel {
+    background-color: #005780 !important;
+    min-height: 75vh;
+    padding: 5px;
+}
+
+.panel-title {
+    color: white;
+    text-align: left;
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-bottom: 10px;
 }
