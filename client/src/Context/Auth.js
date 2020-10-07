@@ -122,10 +122,10 @@ export default ({ children }) => {
    *  >dispatches signup success
    *  >redirects to /board
    */
-  const signupHandler = async (email, password) => {
+  const signupHandler = async (email, password, username, role) => {
     try {
       dispatch({ type: LOADING, payload: true });
-      await signUp({ email, password });
+      await signUp({ email, password, username, role });
       dispatch({ type: LOADING, payload: false });
     } catch (error) {
       dispatch({
