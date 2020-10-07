@@ -13,7 +13,6 @@ const SIGNUP_ERROR_MESSAGE = "User Already Exists";
 /** Action types */
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGIN_FAILED = "LOGIN_ERROR";
-const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 const SIGNUP_FAILED = "SIGNUP_ERROR";
 const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 const LOADING = "LOADING";
@@ -29,6 +28,9 @@ const initialState = {
   isAuthenticated: false,
   loading: false,
   error: null,
+  role: null,
+  username: null,
+  id: null,
 };
 
 const AuthReducer = (state, action) => {
@@ -45,21 +47,19 @@ const AuthReducer = (state, action) => {
         isAuthenticated: false,
         error: LOGIN_ERROR_MESSAGE,
       };
-    case SIGNUP_SUCCESS:
-      return {
-        ...state,
-        error: null,
-      };
     case SIGNUP_FAILED:
       return {
         ...state,
-        error: SIGNUP_ERROR_MESSAGE,
+        error: action.payload || SIGNUP_ERROR_MESSAGE,
       };
     case LOGOUT_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
         error: null,
+        username: null,
+        id: null,
+        role: null,
       };
     case LOADING:
       return {
@@ -93,7 +93,8 @@ export default ({ children }) => {
         redirect(history, location, BOARD_ROUTE);
       }
     });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /** Login handler
    *  >uses firebase login service
@@ -108,7 +109,6 @@ export default ({ children }) => {
         type: LOGIN_SUCCESS,
       });
       dispatch({ type: LOADING, payload: false });
-      redirect(history, location, BOARD_ROUTE);
     } catch {
       dispatch({
         type: LOGIN_FAILED,
@@ -122,18 +122,15 @@ export default ({ children }) => {
    *  >dispatches signup success
    *  >redirects to /board
    */
-  const signupHandler = async (email, password) => {
+  const signupHandler = async (email, password, username, role) => {
     try {
       dispatch({ type: LOADING, payload: true });
-      await signUp(email, password);
-      dispatch({
-        type: SIGNUP_SUCCESS,
-      });
+      await signUp({ email, password, username, role });
       dispatch({ type: LOADING, payload: false });
-      redirect(history, location, BOARD_ROUTE);
-    } catch {
+    } catch (error) {
       dispatch({
         type: SIGNUP_FAILED,
+        payload: error,
       });
       dispatch({ type: LOADING, payload: false });
     }

@@ -2,19 +2,21 @@ const { Bug } = require("../models");
 
 module.exports = {
   // find all bugs saved in db
-  findAll: (req, res) => {
+  findAll: (_, res) => {
     Bug.find()
-      .then((dbModel) => {
-        console.log(dbModel);
-        res.json(dbModel);
-      })
+      .then((bugs) => res.json(bugs))
       .catch((err) => res.status(422).json(err));
   },
   // find bug by id
   findById: (req, res) => {
     Bug.findById(req.params.id)
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).json(err));
+      .then((bug) => {
+        if (bug !== null) res.status(200).json(bug);
+        else res.status(404).json({ message: "Not found" });
+      })
+      .catch((err) => {
+        res.status(422).json(err);
+      });
   },
   // save bug to db
   save: (req, res) => {
@@ -25,14 +27,21 @@ module.exports = {
   // update existing bug in db
   update: (req, res) => {
     Bug.findByIdAndUpdate({ _id: req.params.id }, req.body)
-      .then((dbModel) => res.json(dbModel))
+      .then((bug) => {
+        if (bug !== null) res.status(200).json(bug);
+        else res.status(404).json({ message: "Not found" });
+      })
       .catch((err) => res.status(422).json(err));
   },
   // delete bug from db
   remove: (req, res) => {
-    Bug.findById({ _id: req.params.id })
-      .then((dbModel) => dbModel.remove())
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).json(err));
+    Bug.findByIdAndRemove(req.params.id)
+      .then((bug) => {
+        if (bug !== null) res.status(200).json(bug);
+        else res.status(404).json({ message: "Not found" });
+      })
+      .catch((err) => {
+        res.status(422).json(err);
+      });
   },
 };
