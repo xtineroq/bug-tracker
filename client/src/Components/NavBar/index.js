@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import "./style.css";
 import { AuthContext } from "../../Context/Auth";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 function NavBar() {
   const { logoutHandler } = React.useContext(AuthContext);
@@ -39,9 +40,10 @@ function NavBar() {
           </Box>
           <Button
             onClick={logoutHandler}
-            color="primary"
-            variant="outlined"
+            color="secondary"
+            variant="contained"
             className="link"
+            endIcon={<ExitToAppIcon />}
           >
             Logout
           </Button>
