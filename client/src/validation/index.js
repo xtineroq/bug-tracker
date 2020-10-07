@@ -13,6 +13,10 @@ const userSchema = object().shape({
         ? schema.min(8, "Password should be at least 8 characters.")
         : schema;
     }),
+  username: string()
+    .required("Username is required"),
+  role: string()
+    .required("Please select a role from the list."),
 });
 
 export { userSchema, VALIDATE_SIGNUP };
