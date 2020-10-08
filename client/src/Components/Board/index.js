@@ -7,8 +7,8 @@ import BugCard from "../BugCard";
 import "./style.css";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import TicketForm from '../TicketForm';
-import { Typography } from "@material-ui/core";
+import BugForm from '../BugForm';
+import Typography from "@material-ui/core/Typography";
 
 export default function Board() {
 
@@ -19,11 +19,11 @@ export default function Board() {
         <NavBar />
         <div className="main">
           <Box my={2}>
-            <TicketForm
+            <BugForm
               className="addBtn"
             >
               New Bug
-            </TicketForm>
+            </BugForm>
           </Box>
           <Box className="panel-container">
             <Grid
