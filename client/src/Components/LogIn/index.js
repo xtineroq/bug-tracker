@@ -13,7 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 import "./style.css";
 import { AuthContext } from "../../Context/Auth";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { userSchema } from "../../validation";
+import { userLoginSchema } from "../../validation";
 
 function Copyright() {
   return (
@@ -48,7 +48,7 @@ export default () => {
   const handleSubmit = () => {
     try {
       /** Validation of inputs */
-      userSchema.validateSync({ email, password }, { abortEarly: false });
+      userLoginSchema.validateSync({ email, password }, { abortEarly: false });
       loginHandler(email, password);
     } catch (err) {
       /** Set errors on local state */
