@@ -21,7 +21,7 @@ module.exports = {
   // save bug to db
   save: (req, res) => {
     Bug.create(req.body)
-      .then((dbModel) => res.status(201).json(dbModel))
+      .then((bug) => res.status(201).json(bug))
       .catch((err) => res.status(422).json(err));
   },
   // update existing bug in db

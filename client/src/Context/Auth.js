@@ -35,7 +35,6 @@ const initialState = {
 };
 
 const AuthReducer = (state, action) => {
-  console.log(action)
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
@@ -96,7 +95,6 @@ export default ({ children }) => {
         try {
           const response = await axios.get(`/user?email=${user.email}`);
           const {data} = response;
-          console.log(data)
           dispatch({
             type: LOGIN_SUCCESS,
             payload: { ...data },
