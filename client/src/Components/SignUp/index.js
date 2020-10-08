@@ -13,7 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 import "./style.css";
 import { AuthContext } from "../../Context/Auth";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { userSchema, VALIDATE_SIGNUP } from "../../validation";
+import { userSignUpSchema } from "../../validation";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -72,9 +72,9 @@ export default function SignUp() {
   const handleSubmit = () => {
     try {
       /** Validation of inputs */
-      userSchema.validateSync(
+      userSignUpSchema.validateSync(
         { email, password, username, role },
-        { context: { method: VALIDATE_SIGNUP }, abortEarly: false }
+        { abortEarly: false }
       );
       signupHandler(email, password, username, role);
     } catch (err) {
