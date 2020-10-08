@@ -19,7 +19,7 @@ let bugSeed = [
 ];
 
 Bug.deleteMany({})
-  .then(() => db.Bug.collection.insertMany(bugSeed))
+  .then(() => Bug.collection.insertMany(bugSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);
