@@ -5,6 +5,10 @@ const userController = require("../controllers/userController");
 
 router.route("/user").post(userController.save);
 
+router
+  .route("/user")
+  .get(userController.findByEmail)
+
 router.route("/bugs").get(bugsController.findAll).post(bugsController.save);
 
 router
