@@ -2,6 +2,7 @@ import React from "react";
 import { logIn, logOut, signUp } from "../Service/auth";
 import { useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase/app";
+import axios from "axios";
 
 /** Context for handling authentication */
 export const AuthContext = React.createContext({});
@@ -34,11 +35,15 @@ const initialState = {
 };
 
 const AuthReducer = (state, action) => {
+  console.log(action)
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
+        id: action.payload.id,
+        username: action.payload.username,
+        role: action.payload.role,
         error: null,
       };
     case LOGIN_FAILED:
@@ -85,12 +90,21 @@ export default ({ children }) => {
    *  Check if user is already logged in
    */
   React.useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        dispatch({
-          type: LOGIN_SUCCESS,
-        });
-        redirect(history, location, BOARD_ROUTE);
+        /** get username from server */
+        try {
+          const response = await axios.get(`/user?email=${user.email}`);
+          const {data} = response;
+          console.log(data)
+          dispatch({
+            type: LOGIN_SUCCESS,
+            payload: { ...data },
+          });
+          redirect(history, location, BOARD_ROUTE);
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,11 +119,9 @@ export default ({ children }) => {
     try {
       dispatch({ type: LOADING, payload: true });
       await logIn(email, password);
-      dispatch({
-        type: LOGIN_SUCCESS,
-      });
       dispatch({ type: LOADING, payload: false });
-    } catch {
+    } catch (error) {
+      console.log(error)
       dispatch({
         type: LOGIN_FAILED,
       });
@@ -157,6 +169,7 @@ export default ({ children }) => {
         error: state.error,
         isAuthenticated: state.isAuthenticated,
         isLoading: state.loading,
+        user: state.username,
         loginHandler,
         logoutHandler,
         signupHandler,

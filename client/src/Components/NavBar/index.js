@@ -10,7 +10,7 @@ import { AuthContext } from "../../Context/Auth";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 function NavBar() {
-  const { logoutHandler } = React.useContext(AuthContext);
+  const { logoutHandler, user } = React.useContext(AuthContext);
   return (
     <div className="root">
       <AppBar
@@ -35,7 +35,7 @@ function NavBar() {
               href="#"
               className="link"
             >
-              Username
+              {user}
             </Link>
           </Box>
           <Button

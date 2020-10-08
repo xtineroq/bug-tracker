@@ -14,7 +14,7 @@ module.exports = {
       });
       /** On firebase error delete the saved user */
       if (error) {
-        User.findByIdAndDelete(user._id, (err, _) => {
+        User.findByIdAndDelete(user.id, (err, _) => {
           if (err !== null) res.status(400).json(err);
         });
       }
@@ -34,5 +34,17 @@ module.exports = {
 
       res.status(422).json({ message: defaultMSG, code });
     }
+  },
+  findByEmail: (req, res) => {
+    User.find({ email: req.query.email })
+      .then((user) => {
+        if (user.length > 0) {
+          const { id, username, role } = user[0];
+          res.status(200).json({ id, username, role });
+        } else res.status(404).json({ message: "Not found" });
+      })
+      .catch((err) => {
+        res.status(422).json(err);
+      });
   },
 };
