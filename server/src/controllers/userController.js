@@ -47,4 +47,19 @@ module.exports = {
         res.status(422).json(err);
       });
   },
+  findAll: (_, res) => {
+    User.find({ role: "Developer" })
+      .then((users) => {
+        /** For each user,  extract username from user and append to result */
+        const result = [];
+        for (user of users) {
+          const { username } = user;
+          result.push(username);
+        }
+        res.json(result);
+      })
+      .catch((err) => {
+        res.status(422).json(err);
+      });
+  },
 };
