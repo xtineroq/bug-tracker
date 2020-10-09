@@ -146,8 +146,8 @@ export default function SignUp() {
               // value={role}
               onChange={handleRoleSelect}
             >
-              <MenuItem value={1}>Developer</MenuItem>
-              <MenuItem value={2}>Other Department</MenuItem>
+              <MenuItem value={"Developer"}>Developer</MenuItem>
+              <MenuItem value={"Other Department"}>Other Department</MenuItem>
             </Select>
           </FormControl>
           <div className="form-container">
