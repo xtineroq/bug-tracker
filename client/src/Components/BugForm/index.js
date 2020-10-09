@@ -178,8 +178,12 @@ function BugForm({ children }) {
           <Button variant="contained" color="secondary" onClick={() => 
             handleSave({title, description, stage, priority, assignee})
             .then(
-              handleClose
-              )}
+              setStage({stage: ""}),
+              setPriority({priority: ""}),
+              setAssignee({assignee: ""}),
+            )
+            .then(handleClose)
+          }
           >
             Save
           </Button>
