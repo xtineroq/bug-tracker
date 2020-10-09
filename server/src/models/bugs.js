@@ -13,7 +13,7 @@ const BugSchema = new Schema({
         trim: true,
         required: true
     },
-    status: {
+    stage: {
         type: String,
         required: true
     },

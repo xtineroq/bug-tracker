@@ -11,6 +11,8 @@ import Box from '@material-ui/core/Box';
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from '@material-ui/core/styles';
 import "./style.css";
+import Axios from "axios";
+import BugCard from "../BugCard";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -84,6 +86,22 @@ function BugForm({ children }) {
     setAssignee(event.target.value);
   }
 
+  const handleSave = async ({title, description, stage, priority, assignee}) => {
+    console.log({title, description, stage, priority, assignee})
+    try {
+      await Axios.post("/bugs", {
+        title,
+        description,
+        stage,
+        priority,
+        assignee
+      })
+      return (<BugCard bugData={title, description, stage, priority, assignee}/>);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
     <Button 
@@ -99,6 +117,7 @@ function BugForm({ children }) {
       open={open}
       onClose={handleClose}
       className={classes.modal}
+      disableBackdropClick={true}
     >
       <div className={classes.paper}>
       <form className="form">
@@ -153,10 +172,15 @@ function BugForm({ children }) {
           </Select>
         </FormControl>
         <Box className={classes.btnBox}>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={() => 
+            handleSave({title, description, stage, priority, assignee})
+            .then(
+              handleClose
+              )}
+          >
             Save
           </Button>
         </Box>
