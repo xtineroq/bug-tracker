@@ -7,15 +7,24 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 
 
-function BugCard() {
+function BugCard({title, description, stage, priority, assignee}) {
     return(
         <Card className="root">
         <CardContent>
             <Typography className="title" gutterBottom style={{fontSize: "14px"}}>
-            Bug Title
+            {title}
             </Typography>
             <Typography className="desc" color="textSecondary" component="p" style={{fontSize: "12px"}}>
-            Description goes here...
+            {description}
+            </Typography>
+            <Typography>
+            {stage}
+            </Typography>
+            <Typography>
+            {priority}
+            </Typography>
+            <Typography>
+            {assignee}
             </Typography>
         </CardContent>
         <CardActions>
