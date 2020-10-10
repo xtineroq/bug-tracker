@@ -10,12 +10,18 @@
 
 .toolbar {
     flex-wrap: wrap;
+    background-color: #00334d;
 }
 
 .toolbarTitle {
     flex-grow: 1;
 }
 
-.link {
-    padding-left: 2rem;
+.user-label {
+    color: #f50057;
+}
+
+.username {
+    text-transform: capitalize;
+    color: white;
 }

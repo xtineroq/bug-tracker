@@ -9,7 +9,7 @@ function Copyright() {
       <Typography variant="body2" align="center" style={{color: "#cccccc"}}>
         {'Copyright © '}
         <Link href="https://material-ui.com/" style={{color: "#cccccc"}}>
-            BugTracker
+            MCR
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
