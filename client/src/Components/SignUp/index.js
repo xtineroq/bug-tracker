@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Form from "../Form";
@@ -25,7 +25,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        BugTracker
+        MCR
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -98,7 +98,7 @@ export default function SignUp() {
       disabled={emailError || passwordError || usernameError || roleError} // Disable button if any error is true
       fullWidth
       variant="contained"
-      color="primary"
+      color="secondary"
       className="submit"
       onClick={handleSubmit}
     >
@@ -110,13 +110,13 @@ export default function SignUp() {
     <Grid container component="main" className="grid">
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className="image" />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className="right-panel">
         <div className="paper">
           <Avatar className="avatar">
-            <LockOutlinedIcon />
+            <AccountCircleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign Up
           </Typography>
           <Form
             email={email}
@@ -163,7 +163,7 @@ export default function SignUp() {
             </Typography>
             {signupButtonOrLoading}
             <Grid container>
-              <Grid item>
+              <Grid item className="signIn-link">
                 <RouterLink to="/" variant="body2">
                   {"Already have an account? Sign In"}
                 </RouterLink>
