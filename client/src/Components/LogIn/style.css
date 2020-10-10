@@ -3,11 +3,15 @@
 }
 
 .image {
-    background-image: url("../../Images/code.jpg");
+    background-image: url("../../Images/login-bg.gif");
     background-repeat: no-repeat;
     background-color: grey;
     background-size: cover;
     background-position: center;
+}
+
+.right-panel {
+    background-color: #e6e6e6 !important;
 }
 
 .paper {
@@ -18,7 +22,7 @@
 }
 
 .avatar {
-    background-color: grey;
+    background-color: #00334d !important;
 }
 
 .form {
@@ -27,5 +31,15 @@
 }
 
 .submit {
-    margin: 2rem;
+    padding-top: 1rem;
+    margin: auto;
+}
+
+.form-container {
+    padding-top: 3rem;
+    width: 100%;
+}
+
+.signUp-link {
+    padding-top: 1rem;
 }

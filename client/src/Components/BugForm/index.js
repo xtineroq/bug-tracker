@@ -13,6 +13,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import "./style.css";
 import Axios from "axios";
 import BugCard from "../BugCard";
+import Typography from "@material-ui/core/Typography";
+import BugReportRoundedIcon from '@material-ui/icons/BugReportRounded';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: "absolute",
-    width: "50vw",
+    minWidth: "40vw",
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -35,9 +37,15 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "inherit",
     fontSize: "16px",
     lineHeight: "1.5",
+    borderRadius: "3px",
+  },
+  selectGroup :{
+    display: "flex",
+    flexDirection: "column",
   },
   selectBox: {
-    width: "30%",
+    width: "50%",
+    marginTop: "1rem",
   },
   btnBox: {
     paddingTop: "2rem",
@@ -142,6 +150,13 @@ function BugForm({ children }) {
       >
         <div className={classes.paper}>
           <form className="form">
+            <Typography 
+              className="form-title"
+            >
+              <BugReportRoundedIcon />
+              &nbsp;Create Issue
+            </Typography>
+            <hr />
             <TextField
               margin="normal"
               required
@@ -160,66 +175,72 @@ function BugForm({ children }) {
               name="description"
               onChange={handleDescriptionInput}
               id="description"
-              placeholder="Bug description"
+              placeholder="Detailed description of the issue"
             />
-            <FormControl className={classes.selectBox}>
-              <InputLabel id="stage" required>
-                Status
-              </InputLabel>
-              <Select
-                labelId="stage"
-                id="stage"
-                value={stage}
-                onChange={handleStageSelect}
-              >
-                <MenuItem value={"backlog"}>Backlog</MenuItem>
-                <MenuItem value={"todo"}>To Do</MenuItem>
-                <MenuItem value={"in-progress"}>In Progress</MenuItem>
-                <MenuItem value={"on-staging"}>On Staging</MenuItem>
-                <MenuItem value={"ready-for-uat"}>Ready for UAT</MenuItem>
-                <MenuItem value={"uat-approved"}>UAT Approved</MenuItem>
-                <MenuItem value={"live"}>Live on Production</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl className={classes.selectBox}>
-              <InputLabel id="priority" required>
-                Priority
-              </InputLabel>
-              <Select
-                labelId="priority"
-                id="priority"
-                value={priority}
-                onChange={handlePrioritySelect}
-              >
-                <MenuItem value={"blocker"}>Blocker</MenuItem>
-                <MenuItem value={"critical"}>Critical</MenuItem>
-                <MenuItem value={"major"}>Major</MenuItem>
-                <MenuItem value={"minor"}>Minor</MenuItem>
-                <MenuItem value={"trivial"}>Trivial</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl className={classes.selectBox}>
-              <InputLabel id="assignee" required>
-                Assignee
-              </InputLabel>
-              <Select
-                labelId="assignee"
-                id="assignee"
-                value={assignee}
-                onChange={handleAssigneeSelect}
-              >
-                {assigneeList.map((user, index) => (
-                  <MenuItem key={index} value={user}>
-                    {user}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <Box className={classes.selectGroup}>
+              <FormControl className={classes.selectBox}>
+                <InputLabel id="stage" required>
+                  Status
+                </InputLabel>
+                <Select
+                  labelId="stage"
+                  id="stage"
+                  value={stage}
+                  onChange={handleStageSelect}
+                >
+                  <MenuItem value={"backlog"}>Backlog</MenuItem>
+                  <MenuItem value={"todo"}>To Do</MenuItem>
+                  <MenuItem value={"in-progress"}>In Progress</MenuItem>
+                  <MenuItem value={"on-staging"}>On Staging</MenuItem>
+                  <MenuItem value={"ready-for-uat"}>Ready for UAT</MenuItem>
+                  <MenuItem value={"uat-approved"}>UAT Approved</MenuItem>
+                  <MenuItem value={"live"}>Live on Production</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl className={classes.selectBox}>
+                <InputLabel id="priority" required>
+                  Priority
+                </InputLabel>
+                <Select
+                  labelId="priority"
+                  id="priority"
+                  value={priority}
+                  onChange={handlePrioritySelect}
+                >
+                  <MenuItem value={"blocker"}>Blocker</MenuItem>
+                  <MenuItem value={"critical"}>Critical</MenuItem>
+                  <MenuItem value={"major"}>Major</MenuItem>
+                  <MenuItem value={"minor"}>Minor</MenuItem>
+                  <MenuItem value={"trivial"}>Trivial</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl className={classes.selectBox}>
+                <InputLabel id="assignee" required>
+                  Assignee
+                </InputLabel>
+                <Select
+                  labelId="assignee"
+                  id="assignee"
+                  value={assignee}
+                  onChange={handleAssigneeSelect}
+                >
+                  {assigneeList.map((user, index) => (
+                    <MenuItem key={index} value={user}>
+                      {user}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
             <Box className={classes.btnBox}>
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={handleClose}
+                onClick={() => handleClose(
+                  setStage({stage: ""}),
+                  setPriority({priority: ""}),
+                  setAssignee({assignee: ""}),
+                )}
               >
                 Cancel
               </Button>
