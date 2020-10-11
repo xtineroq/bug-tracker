@@ -6,6 +6,8 @@
 
 .main {
     padding: 2rem;
+    /* display: flex;
+    flex-wrap: wrap; */
 }
 
 .addBtn {
@@ -13,14 +15,20 @@
 }
 
 .panel-container {
+    height: 100vh;
+    width: 1820;
     display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+    overflow-x: auto;
+    flex-grow: 1;
 }
 
 .panel {
     background-color: #005780 !important;
     min-height: 75vh;
+    width: 260px;
     padding: 5px;
 }
 

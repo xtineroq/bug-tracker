@@ -1,0 +1,11 @@
+.form-title {
+    color: #00334d !important;
+    font-size: 20px !important;
+    display: flex;
+    align-items: center;
+}
+
+hr {
+    border: 1px solid #f50057 !important;
+    border-radius: 1px;
+}

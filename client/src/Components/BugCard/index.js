@@ -5,11 +5,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
-
+import "./style.css";
 
 function BugCard({title, description, stage, priority, assignee}) {
     return(
-        <Card className="root">
+        <Card className="card-root">
         <CardContent>
             <Typography className="title" gutterBottom style={{fontSize: "14px"}}>
             {title}

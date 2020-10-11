@@ -28,9 +28,6 @@ export default function Board() {
           <Box className="panel-container">
             <Grid
               container
-              direction="row"
-              justify="center"
-              alignItems="center"
               spacing={1}
             >
               <Grid item xs>
