@@ -11,6 +11,10 @@
     background-color: #00334d !important;
 }
 
+.roleSelect {
+    width: 100%;
+}
+
 .signIn-link {
     padding-top: 1rem;
 }

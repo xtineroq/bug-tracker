@@ -32,12 +32,12 @@
 
 .submit {
     padding-top: 1rem;
-    margin: auto;
 }
 
 .form-container {
     padding-top: 3rem;
     width: 100%;
+    text-align: center;
 }
 
 .signUp-link {
