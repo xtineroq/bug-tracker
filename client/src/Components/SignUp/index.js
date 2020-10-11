@@ -18,7 +18,6 @@ import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
 
 function Copyright() {
   return (
@@ -92,7 +91,7 @@ export default function SignUp() {
 
   /** switch signup button to circular progress */
   const signupButtonOrLoading = isLoading ? (
-    <CircularProgress size={30} thickness={4} />
+    <CircularProgress size={30} thickness={4} color="secondary" />
   ) : (
     <Button
       disabled={emailError || passwordError || usernameError || roleError} // Disable button if any error is true
@@ -138,18 +137,19 @@ export default function SignUp() {
             autoComplete="username"
             autoFocus
           />
-          <FormControl className="formControl" fullWidth>
-            <InputLabel id="role-label">Select your role</InputLabel>
+          <div className="roleSelect" style={{width: "100%", marginTop:"1rem"}}>
+            <InputLabel id="role-label" required>Select your role</InputLabel>
             <Select
               labelId="role-label"
               id="role"
+              style={{width: "100%"}}
               // value={role}
               onChange={handleRoleSelect}
             >
               <MenuItem value={"Developer"}>Developer</MenuItem>
               <MenuItem value={"Other Department"}>Other Department</MenuItem>
             </Select>
-          </FormControl>
+          </div>
           <div className="form-container">
             {/* Display all validation error messages */}
             {errorMessages.map((err, index) => (
