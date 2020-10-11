@@ -15,6 +15,7 @@ import Axios from "axios";
 import BugCard from "../BugCard";
 import Typography from "@material-ui/core/Typography";
 import BugReportRoundedIcon from '@material-ui/icons/BugReportRounded';
+import { AuthContext } from "../../Context/Auth";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -44,8 +45,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   selectBox: {
-    width: "50%",
+    width: "60%",
     marginTop: "1rem",
+  },
+  reporter: {
+    paddingTop: "2rem",
+    textTransform: "Capitalize",
+    color: "#00334d",
   },
   btnBox: {
     paddingTop: "2rem",
@@ -57,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function BugForm({ children }) {
+  const { user } = React.useContext(AuthContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
@@ -67,6 +74,7 @@ function BugForm({ children }) {
   const [assigneeList, setAssigneeList] = React.useState([]);
 
   React.useEffect(() => {
+    /** fetch all users with developer role to use as options for Assignee */
     async function fetchAssignees() {
       try {
         const res = await Axios.get("/users");
@@ -78,7 +86,7 @@ function BugForm({ children }) {
       }
     }
     fetchAssignees();
-  }, []);
+  }, [user]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -108,13 +116,16 @@ function BugForm({ children }) {
     setAssignee(event.target.value);
   };
 
+  /** Form submit handler */
   const handleSave = async ({
     title,
     description,
     stage,
     priority,
     assignee,
+    reporter
   }) => {
+    /** Send bug form data to server */
     try {
       await Axios.post("/bugs", {
         title,
@@ -122,11 +133,13 @@ function BugForm({ children }) {
         stage,
         priority,
         assignee,
+        reporter
       });
       return (
-        <BugCard bugData={(title, description, stage, priority, assignee)} />
+        <BugCard bugData={(title, description, stage, priority, assignee, reporter)} />
       );
     } catch (error) {
+      console.log({title, description, stage, priority, assignee, reporter});
       console.log(error);
     }
   };
@@ -232,6 +245,9 @@ function BugForm({ children }) {
                 </Select>
               </FormControl>
             </Box>
+            <Typography className={classes.reporter}>
+              Reporter: {user}
+            </Typography>
             <Box className={classes.btnBox}>
               <Button
                 variant="contained"
@@ -254,6 +270,7 @@ function BugForm({ children }) {
                     stage,
                     priority,
                     assignee,
+                    reporter: user
                   })
                   .then(
                     setStage({stage: ""}),
