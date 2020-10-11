@@ -1,4 +1,16 @@
 .form-container {
-    padding-top: 2rem;
+    padding-top: 3rem;
     width: 100%;
+}
+
+.right-panel {
+    background-color: #e6e6e6 !important;
+}
+
+.avatar {
+    background-color: #00334d !important;
+}
+
+.signIn-link {
+    padding-top: 1rem;
 }
