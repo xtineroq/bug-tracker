@@ -1,39 +1,68 @@
 .board-root {
-    display: flex;
-    flex-direction: column;
-    background-color: #00334d;
+  display: flex;
+  flex-direction: column;
+  background-color: #00334d;
 }
 
 .board-main {
-    padding: 2rem;
-    width: auto;
+  padding: 2rem;
+  width: auto;
 }
 
 .addBtn {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
+/* Inner wrapper for column */
+.column-wrapper {
+  display: flex;
+  /* We set higher width more than its parent/outer-container width,
+     since we want to add extra spaces for the column,
+     this means that the width of this container will
+     overlap its outer container(.panel-container).
+  */
+  width: 100%;
+  /*  Any overlap/overflow is automatically handled through scrolling. */
+  overflow: auto;
+}
+
+/* Optional: Hiding scrollbar
+   Hide scrollbar for Chrome, Safari and Opera 
+*/
+.column-wrapper::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.column-wrapper {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* hiding scrollbar end */
+
+/* Outer wrapper for column, to make sure the column stays within the center of the page*/
 .panel-container {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: space-around;
-    overflow-x: auto;
+
+  height: 100vh;
 }
 
 .panel {
-    background-color: #005780 !important;
-    min-height: 75vh;
-    width: 260px;
-    padding: 5px;
+  background-color: #005780 !important;
+  min-height: 75vh;
+  /*  We don't want flex items to shrink. Alternatively you can use min-width to set minimum width */
+  flex-shrink: 0;
+  width: 260px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.panel-0__right-margin {
+  margin-right: 0px;
 }
 
 .panel-title {
-    color: white;
-    text-align: left;
-    padding-top: 7px;
-    padding-left: 10px;
-    padding-bottom: 10px;
+  color: white;
+  text-align: left;
+  padding-top: 7px;
+  padding-left: 10px;
+  padding-bottom: 10px;
 }
