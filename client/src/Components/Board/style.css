@@ -16,7 +16,7 @@
 /* Inner wrapper for column */
 .column-wrapper {
   display: flex;
-  /* We set higher width more than its parent/outer-container width,
+  /* We set higher width (width + margin-right) more than its parent/outer-container width,
      since we want to add extra spaces for the column,
      this means that the width of this container will
      overlap its outer container(.panel-container).
