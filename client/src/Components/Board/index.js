@@ -19,81 +19,48 @@ export default function Board() {
         <Box my={2}>
           <BugForm className="addBtn">New Bug</BugForm>
         </Box>
-        {/* <Box> */}
-          <Grid spacing={1} className="panel-container">
-            <Grid item xs>
-              <Paper className="panel">
-                <Typography
-                  className="panel-title"
-                  style={{ fontSize: "14px" }}
-                >
-                  BACKLOG
-                </Typography>
-                <BugCard />
-              </Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper className="panel">
-                <Typography
-                  className="panel-title"
-                  style={{ fontSize: "14px" }}
-                >
-                  TO DO
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper className="panel">
-                <Typography
-                  className="panel-title"
-                  style={{ fontSize: "14px" }}
-                >
-                  IN PROGRESS
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper className="panel">
-                <Typography
-                  className="panel-title"
-                  style={{ fontSize: "14px" }}
-                >
-                  ON STAGING
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper className="panel">
-                <Typography
-                  className="panel-title"
-                  style={{ fontSize: "14px" }}
-                >
-                  READY FOR UAT
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper className="panel">
-                <Typography
-                  className="panel-title"
-                  style={{ fontSize: "14px" }}
-                >
-                  UAT APPROVED
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper className="panel">
-                <Typography
-                  className="panel-title"
-                  style={{ fontSize: "14px" }}
-                >
-                  LIVE ON PRODUCTION
-                </Typography>
-              </Paper>
-            </Grid>
-          </Grid>
-        {/* </Box> */}
+        {/* Outer wrapper */}
+        <Grid className="panel-container">
+          {/* Inner wrapper */}
+          <div className="column-wrapper">
+            <div className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                BACKLOG
+              </Typography>
+              <BugCard />
+            </div>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                TO DO
+              </Typography>
+            </Paper>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                IN PROGRESS
+              </Typography>
+            </Paper>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                ON STAGING
+              </Typography>
+            </Paper>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                READY FOR UAT
+              </Typography>
+            </Paper>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                UAT APPROVED
+              </Typography>
+            </Paper>
+            <Paper className="panel panel-0__right-margin">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                LIVE ON PRODUCTION
+              </Typography>
+            </Paper>
+          </div>
+        </Grid>
       </div>
       <Footer />
     </div>
