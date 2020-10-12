@@ -5,14 +5,13 @@ import NavBar from "../NavBar";
 import Footer from "../Footer";
 import BugCard from "../BugCard";
 import "./style.css";
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import BugForm from '../BugForm';
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import BugForm from "../BugForm";
 import Typography from "@material-ui/core/Typography";
 import API from "../../utils/API";
 
 export default function Board() {
-
   /** state to store each bug data depending on status */
   const [backlogState, setBacklogState] = React.useState([]);
   const [todoState, setTodoState] = React.useState([]);
@@ -34,7 +33,7 @@ export default function Board() {
         const uatApprovedList = [];
         const liveList = [];
 
-        res.data.forEach(bug => {
+        res.data.forEach((bug) => {
           if (bug.stage === "backlog") {
             backlogList.push(bug);
           } else if (bug.stage === "todo") {
@@ -60,7 +59,6 @@ export default function Board() {
         setReadyUatState(readyUatList);
         setUatApprovedState(uatApprovedList);
         setLiveState(liveState);
-
       })
       .catch((err) => console.log(err));
   };
@@ -71,84 +69,63 @@ export default function Board() {
   }, []);
 
   return (
-    <div className="root">
+    <div className="board-root">
       <CssBaseline />
-      <Box className="nav">
-        <NavBar />
-        <div className="main">
-          <Box my={2}>
-            <BugForm
-              className="addBtn"
-            >
-              New Bug
-            </BugForm>
-          </Box>
-          <Box className="panel-container">
-            <Grid
-              container
-              spacing={1}
-            >
-              <Grid item xs>
-                <Paper className="panel">
-                  <Typography className="panel-title" style={{ fontSize: "14px" }}>
-                    BACKLOG
-                  </Typography>
-                  <BugCard issues={backlogState}/>
-                </Paper>
-              </Grid>
-              <Grid item xs>
-                <Paper className="panel">
-                  <Typography className="panel-title" style={{ fontSize: "14px" }}>
-                    TO DO
-                  </Typography>
-                  <BugCard issues={todoState}/>
-                </Paper>
-              </Grid>
-              <Grid item xs>
-                <Paper className="panel">
-                  <Typography className="panel-title" style={{ fontSize: "14px" }}>
-                    IN PROGRESS
-                  </Typography>
-                  <BugCard issues={inProgressState}/>
-                </Paper>
-              </Grid>
-              <Grid item xs>
-                <Paper className="panel">
-                  <Typography className="panel-title" style={{ fontSize: "14px" }}>
-                    ON STAGING
-                  </Typography>
-                  <BugCard issues={onStagingState}/>
-                </Paper>
-              </Grid>
-              <Grid item xs>
-                <Paper className="panel">
-                  <Typography className="panel-title" style={{ fontSize: "14px" }}>
-                    READY FOR UAT
-                  </Typography>
-                  <BugCard issues={readyUatState}/>
-                </Paper>
-              </Grid>
-              <Grid item xs>
-                <Paper className="panel">
-                  <Typography className="panel-title" style={{ fontSize: "14px" }}>
-                    UAT APPROVED
-                  </Typography>
-                  <BugCard issues={uatApprovedState}/>
-                </Paper>
-              </Grid>
-              <Grid item xs>
-                <Paper className="panel">
-                  <Typography className="panel-title" style={{ fontSize: "14px" }}>
-                    LIVE ON PRODUCTION
-                  </Typography>
-                  <BugCard issues={liveState}/>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
-        </div>
-        <Footer />
-      </Box>
+      <NavBar />
+      <div className="board-main">
+        <Box my={2}>
+          <BugForm className="addBtn">New Bug</BugForm>
+        </Box>
+        {/* Outer wrapper */}
+        <Grid className="panel-container">
+          {/* Inner wrapper */}
+          <div className="column-wrapper">
+            <div className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                BACKLOG
+              </Typography>
+              <BugCard issues={backlogState} />
+            </div>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                TO DO
+              </Typography>
+              <BugCard issues={todoState} />
+            </Paper>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                IN PROGRESS
+              </Typography>
+              <BugCard issues={inProgressState} />
+            </Paper>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                ON STAGING
+              </Typography>
+              <BugCard issues={onStagingState} />
+            </Paper>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                READY FOR UAT
+              </Typography>
+              <BugCard issues={readyUatState} />
+            </Paper>
+            <Paper className="panel">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                UAT APPROVED
+              </Typography>
+              <BugCard issues={uatApprovedState} />
+            </Paper>
+            <Paper className="panel panel-0__right-margin">
+              <Typography className="panel-title" style={{ fontSize: "14px" }}>
+                LIVE ON PRODUCTION
+              </Typography>
+              <BugCard issues={liveState} />
+            </Paper>
+          </div>
+        </Grid>
+      </div>
+      <Footer />
     </div>
   );
 }
