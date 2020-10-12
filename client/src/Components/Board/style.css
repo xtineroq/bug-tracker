@@ -16,7 +16,7 @@
 
 .panel-container {
     height: 100vh;
-    width: 1820;
+    width: 100vw;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
