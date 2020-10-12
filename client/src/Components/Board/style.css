@@ -41,7 +41,6 @@
 
 /* Outer wrapper for column, to make sure the column stays within the center of the page*/
 .panel-container {
-
   height: 100vh;
 }
 

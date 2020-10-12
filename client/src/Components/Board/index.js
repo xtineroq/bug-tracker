@@ -9,8 +9,65 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import BugForm from "../BugForm";
 import Typography from "@material-ui/core/Typography";
+import API from "../../utils/API";
 
 export default function Board() {
+  /** state to store each bug data depending on status */
+  const [backlogState, setBacklogState] = React.useState([]);
+  const [todoState, setTodoState] = React.useState([]);
+  const [inProgressState, setInProgressState] = React.useState([]);
+  const [onStagingState, setOnStagingState] = React.useState([]);
+  const [readyUatState, setReadyUatState] = React.useState([]);
+  const [uatApprovedState, setUatApprovedState] = React.useState([]);
+  const [liveState, setLiveState] = React.useState([]);
+
+  /** retrieve all bugs from db */
+  const fetchBugs = () => {
+    API.getBugs()
+      .then((res) => {
+        const backlogList = [];
+        const todoList = [];
+        const inProgressList = [];
+        const onStagingList = [];
+        const readyUatList = [];
+        const uatApprovedList = [];
+        const liveList = [];
+
+        res.data.forEach((bug) => {
+          if (bug.stage === "backlog") {
+            backlogList.push(bug);
+          } else if (bug.stage === "todo") {
+            todoList.push(bug);
+          } else if (bug.stage === "in-progress") {
+            inProgressList.push(bug);
+          } else if (bug.stage === "on-staging") {
+            onStagingList.push(bug);
+          } else if (bug.stage === "ready-for-uat") {
+            readyUatList.push(bug);
+          } else if (bug.stage === "uat-approved") {
+            uatApprovedList.push(bug);
+          } else if (bug.stage === "live") {
+            liveList.push(bug);
+          }
+        });
+
+        /**  */
+        setBacklogState(backlogList);
+        setTodoState(todoList);
+        setInProgressState(inProgressList);
+        setOnStagingState(onStagingList);
+        setReadyUatState(readyUatList);
+        setUatApprovedState(uatApprovedList);
+        setLiveState(liveState);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  /** load all bugs */
+  React.useEffect(() => {
+    fetchBugs();
+  }, []);
+
   return (
     <div className="board-root">
       <CssBaseline />
