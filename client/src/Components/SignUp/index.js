@@ -142,8 +142,8 @@ export default function SignUp() {
             <Select
               labelId="role-label"
               id="role"
+              value={role}
               style={{width: "100%"}}
-              // value={role}
               onChange={handleRoleSelect}
             >
               <MenuItem value={"Developer"}>Developer</MenuItem>
