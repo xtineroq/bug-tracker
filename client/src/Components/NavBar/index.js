@@ -12,7 +12,7 @@ import logo from '../../Images/trace-logo-small.png';
 function NavBar() {
   const { logoutHandler, user } = React.useContext(AuthContext);
   return (
-    <div className="root">
+    <div className="nav-root">
       <AppBar
         position="static"
         color="default"
