@@ -12,7 +12,6 @@ import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import "./style.css";
 import Axios from "axios";
-import BugCard from "../BugCard";
 import Typography from "@material-ui/core/Typography";
 import BugReportRoundedIcon from '@material-ui/icons/BugReportRounded';
 import { AuthContext } from "../../Context/Auth";
@@ -62,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BugForm({ children }) {
+function BugForm({ children, fetchBugs }) {
   const { user } = React.useContext(AuthContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -86,7 +85,7 @@ function BugForm({ children }) {
       }
     }
     fetchAssignees();
-  }, [user]);
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -135,9 +134,6 @@ function BugForm({ children }) {
         assignee,
         reporter
       });
-      return (
-        <BugCard bugData={(title, description, stage, priority, assignee, reporter)} />
-      );
     } catch (error) {
       console.log({title, description, stage, priority, assignee, reporter});
       console.log(error);
@@ -192,11 +188,11 @@ function BugForm({ children }) {
             />
             <Box className={classes.selectGroup}>
               <FormControl className={classes.selectBox}>
-                <InputLabel id="stage" required>
+                <InputLabel id="stage-label" required>
                   Status
                 </InputLabel>
                 <Select
-                  labelId="stage"
+                  labelId="stage-label"
                   id="stage"
                   value={stage}
                   onChange={handleStageSelect}
