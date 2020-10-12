@@ -84,37 +84,43 @@ export default function Board() {
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 BACKLOG
               </Typography>
-              <BugCard />
+              <BugCard issues={backlogState} />
             </div>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 TO DO
               </Typography>
+              <BugCard issues={todoState} />
             </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 IN PROGRESS
               </Typography>
+              <BugCard issues={inProgressState} />
             </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 ON STAGING
               </Typography>
+              <BugCard issues={onStagingState} />
             </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 READY FOR UAT
               </Typography>
+              <BugCard issues={readyUatState} />
             </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 UAT APPROVED
               </Typography>
+              <BugCard issues={uatApprovedState} />
             </Paper>
             <Paper className="panel panel-0__right-margin">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 LIVE ON PRODUCTION
               </Typography>
+              <BugCard issues={liveState} />
             </Paper>
           </div>
         </Grid>
