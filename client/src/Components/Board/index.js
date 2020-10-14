@@ -14,6 +14,15 @@ import API from "../../utils/API";
 import BugForm from "../BugForm";
 import { AuthContext } from "../../Context/Auth";
 
+const defaultBugFormData = {
+  title: "",
+  description: "",
+  stage: "",
+  assignee: "",
+  reporter: "",
+  priority: "",
+}
+
 export default function Board() {
   /** States to store each bug data depending on status */
   const { user } = React.useContext(AuthContext);
@@ -25,14 +34,7 @@ export default function Board() {
   const [uatApprovedState, setUatApprovedState] = React.useState([]);
   const [liveState, setLiveState] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [bugFormData, setBugFormData] = React.useState({
-    title: "",
-    description: "",
-    stage: "",
-    assignee: "",
-    reporter: user,
-    priority: "",
-  });
+  const [bugFormData, setBugFormData] = React.useState(defaultBugFormData);
 
   /** retrieve all bugs from db */
   const fetchBugs = () => {
@@ -64,7 +66,7 @@ export default function Board() {
           }
         });
 
-        /**  */
+        /** set local state values to db data */
         setBacklogState(backlogList);
         setTodoState(todoList);
         setInProgressState(inProgressList);
@@ -83,6 +85,8 @@ export default function Board() {
 
   const handleOpen = () => {
     setOpen(true);
+    /** spread the value of defaultBugFormData and override reporter property */
+    setBugFormData({...defaultBugFormData, reporter: user})
   };
 
   const handleClose = () => {
@@ -117,6 +121,7 @@ export default function Board() {
                 issues={backlogState}
                 handleOpen={handleOpen}
                 setBugFormData={setBugFormData}
+                fetchBugs={fetchBugs}
               />
             </div>
             <Paper className="panel">
@@ -127,6 +132,7 @@ export default function Board() {
                 issues={todoState}
                 handleOpen={handleOpen}
                 setBugFormData={setBugFormData}
+                fetchBugs={fetchBugs}
               />
             </Paper>
             <Paper className="panel">
@@ -137,6 +143,7 @@ export default function Board() {
                 issues={inProgressState}
                 handleOpen={handleOpen}
                 setBugFormData={setBugFormData}
+                fetchBugs={fetchBugs}
               />
             </Paper>
             <Paper className="panel">
@@ -147,6 +154,7 @@ export default function Board() {
                 issues={onStagingState}
                 handleOpen={handleOpen}
                 setBugFormData={setBugFormData}
+                fetchBugs={fetchBugs}
               />
             </Paper>
             <Paper className="panel">
@@ -157,6 +165,7 @@ export default function Board() {
                 issues={readyUatState}
                 handleOpen={handleOpen}
                 setBugFormData={setBugFormData}
+                fetchBugs={fetchBugs}
               />
             </Paper>
             <Paper className="panel">
@@ -167,6 +176,7 @@ export default function Board() {
                 issues={uatApprovedState}
                 handleOpen={handleOpen}
                 setBugFormData={setBugFormData}
+                fetchBugs={fetchBugs}
               />
             </Paper>
             <Paper className="panel panel-0__right-margin">
@@ -177,6 +187,7 @@ export default function Board() {
                 issues={liveState}
                 handleOpen={handleOpen}
                 setBugFormData={setBugFormData}
+                fetchBugs={fetchBugs}
               />
             </Paper>
           </div>
