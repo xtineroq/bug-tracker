@@ -10,9 +10,9 @@ import Box from "@material-ui/core/Box";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import "./style.css";
-import Axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import BugReportRoundedIcon from "@material-ui/icons/BugReportRounded";
+import Axios from "axios";
 import { AuthContext } from "../../Context/Auth";
 import API from "../../utils/API";
 
@@ -62,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
-  console.log(bugFormData);
   const { user } = React.useContext(AuthContext);
   const classes = useStyles();
   let [title, setTitle] = React.useState("");
@@ -88,8 +87,17 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
     fetchAssignees();
   }, []);
 
+  /** display data from db to bugForm when bugCard is clicked */
+  React.useEffect(() => {
+    setTitle(bugFormData.title);
+    setDescription(bugFormData.description);
+    setStage(bugFormData.stage);
+    setPriority(bugFormData.priority);
+    setAssignee(bugFormData.assignee);
+    setReporter(bugFormData.reporter);
+  }, [bugFormData]);
+
   const handleTitleInput = (event) => {
-    bugFormData.title = setTitle({ title: "" });
     setTitle(event.target.value);
   };
 
@@ -117,17 +125,10 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
   };
 
   /** Form save handler */
-  const handleSave = async ({
-    title,
-    description,
-    stage,
-    priority,
-    assignee,
-    reporter,
-  }) => {
+  const handleSave = async () => {
     /** Send bug form data to server */
     try {
-      await Axios.post("/bugs", {
+      await API.saveBug({
         title,
         description,
         stage,
@@ -145,29 +146,24 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
     }
   };
 
-  /** Form save handler */
+  /** Form update handler */
   const handleUpdate = async () => {
     /** Send bug form data to server */
     try {
-      await API.updateBug()
-      .then((req) => {
-          console.log(req);
-      })
+      await API.updateBug(bugFormData._id, {
+        title,
+        description,
+        stage,
+        priority,
+        assignee,
+        reporter,
+      });
       fetchBugs();
+      handleClose();
     } catch (error) {
       console.log(error);
     }
   };
-
-  /** display data from db to bugForm when bugCard is clicked */
-  if (bugFormData !== null) {
-    title = bugFormData.title;
-    description = bugFormData.description;
-    stage = bugFormData.stage;
-    priority = bugFormData.priority;
-    assignee = bugFormData.assignee;
-    reporter = bugFormData.reporter;
-  }
 
   return (
     <>
@@ -272,7 +268,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               >
                 Cancel
               </Button>
-              {!bugFormData ? (
+              {!bugFormData.title ? (
                 <Button
                   variant="contained"
                   color="secondary"

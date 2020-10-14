@@ -18,7 +18,7 @@ export default {
     return axios.post("/bugs", bugData);
   },
   // Update specific bug
-  updateBug: (_id) => {
-    return axios.put("/bugs/" + _id);
-  }
+  updateBug: (_id, bugData) => {
+    return axios.put("/bugs/" + _id, bugData);
+  },
 };
