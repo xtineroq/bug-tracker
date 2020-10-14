@@ -14,6 +14,7 @@ import Axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import BugReportRoundedIcon from "@material-ui/icons/BugReportRounded";
 import { AuthContext } from "../../Context/Auth";
+import API from "../../utils/API";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -61,14 +62,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
-    console.log(bugFormData)
+  console.log(bugFormData);
   const { user } = React.useContext(AuthContext);
   const classes = useStyles();
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [stage, setStage] = React.useState("");
-  const [priority, setPriority] = React.useState("");
-  const [assignee, setAssignee] = React.useState("");
+  let [title, setTitle] = React.useState("");
+  let [description, setDescription] = React.useState("");
+  let [stage, setStage] = React.useState("");
+  let [priority, setPriority] = React.useState("");
+  let [assignee, setAssignee] = React.useState("");
+  let [reporter, setReporter] = React.useState(user);
   const [assigneeList, setAssigneeList] = React.useState([]);
 
   React.useEffect(() => {
@@ -87,6 +89,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
   }, []);
 
   const handleTitleInput = (event) => {
+    bugFormData.title = setTitle({ title: "" });
     setTitle(event.target.value);
   };
 
@@ -107,13 +110,13 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
   };
 
   const handleCancel = () => {
-    handleClose()
-    setStage({ stage: "" })
-    setPriority({ priority: "" })
-    setAssignee({ assignee: "" })
-  }
+    handleClose();
+    setStage({ stage: "" });
+    setPriority({ priority: "" });
+    setAssignee({ assignee: "" });
+  };
 
-  /** Form submit handler */
+  /** Form save handler */
   const handleSave = async ({
     title,
     description,
@@ -142,6 +145,30 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
     }
   };
 
+  /** Form save handler */
+  const handleUpdate = async () => {
+    /** Send bug form data to server */
+    try {
+      await API.updateBug()
+      .then((req) => {
+          console.log(req);
+      })
+      fetchBugs();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /** display data from db to bugForm when bugCard is clicked */
+  if (bugFormData !== null) {
+    title = bugFormData.title;
+    description = bugFormData.description;
+    stage = bugFormData.stage;
+    priority = bugFormData.priority;
+    assignee = bugFormData.assignee;
+    reporter = bugFormData.reporter;
+  }
+
   return (
     <>
       <Modal
@@ -164,6 +191,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               id="title"
               label="Issue Summary"
               name="title"
+              value={title}
               onChange={handleTitleInput}
               autoFocus
             />
@@ -175,6 +203,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               name="description"
               onChange={handleDescriptionInput}
               id="description"
+              value={description}
               placeholder="Detailed description of the issue"
             />
             <Box className={classes.selectGroup}>
@@ -233,7 +262,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               </FormControl>
             </Box>
             <Typography className={classes.reporter}>
-              Reporter: {user}
+              Reporter: {reporter}
             </Typography>
             <Box className={classes.btnBox}>
               <Button
@@ -243,13 +272,23 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               >
                 Cancel
               </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleSave}
-              >
-                Save
-              </Button>
+              {!bugFormData ? (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleUpdate}
+                >
+                  Update
+                </Button>
+              )}
             </Box>
           </form>
         </div>

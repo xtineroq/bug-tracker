@@ -8,7 +8,6 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import "./style.css";
 
 function BugCard({issues, handleOpen, setBugFormData}) {
-  console.log({issues});
 
   const clickHandler = (bug) => {
     handleOpen()

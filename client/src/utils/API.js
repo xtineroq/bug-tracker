@@ -5,7 +5,7 @@ export default {
   getBugs: () => {
     return axios.get("/bugs");
   },
-  // Get book with the given id
+  // Get bug with the given id
   getBug: (_id) => {
     return axios.get("/bugs/" + _id);
   },
@@ -16,5 +16,9 @@ export default {
   // Save bug to db
   saveBug: (bugData) => {
     return axios.post("/bugs", bugData);
+  },
+  // Update specific bug
+  updateBug: (_id) => {
+    return axios.put("/bugs/" + _id);
   }
 };
