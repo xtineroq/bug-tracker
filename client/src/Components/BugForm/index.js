@@ -6,14 +6,13 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import AddIcon from "@material-ui/icons/Add";
 import Box from "@material-ui/core/Box";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import "./style.css";
 import Axios from "axios";
 import Typography from "@material-ui/core/Typography";
-import BugReportRoundedIcon from '@material-ui/icons/BugReportRounded';
+import BugReportRoundedIcon from "@material-ui/icons/BugReportRounded";
 import { AuthContext } from "../../Context/Auth";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "1.5",
     borderRadius: "3px",
   },
-  selectGroup :{
+  selectGroup: {
     display: "flex",
     flexDirection: "column",
   },
@@ -61,10 +60,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BugForm({ children, fetchBugs }) {
+function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
+    console.log(bugFormData)
   const { user } = React.useContext(AuthContext);
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [stage, setStage] = React.useState("");
@@ -87,14 +86,6 @@ function BugForm({ children, fetchBugs }) {
     fetchAssignees();
   }, []);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleTitleInput = (event) => {
     setTitle(event.target.value);
   };
@@ -115,6 +106,13 @@ function BugForm({ children, fetchBugs }) {
     setAssignee(event.target.value);
   };
 
+  const handleCancel = () => {
+    handleClose()
+    setStage({ stage: "" })
+    setPriority({ priority: "" })
+    setAssignee({ assignee: "" })
+  }
+
   /** Form submit handler */
   const handleSave = async ({
     title,
@@ -122,7 +120,7 @@ function BugForm({ children, fetchBugs }) {
     stage,
     priority,
     assignee,
-    reporter
+    reporter,
   }) => {
     /** Send bug form data to server */
     try {
@@ -132,25 +130,20 @@ function BugForm({ children, fetchBugs }) {
         stage,
         priority,
         assignee,
-        reporter
+        reporter,
       });
+      fetchBugs();
+      setStage({ stage: "" });
+      setPriority({ priority: "" });
+      setAssignee({ assignee: "" });
+      handleClose();
     } catch (error) {
-      console.log({title, description, stage, priority, assignee, reporter});
       console.log(error);
     }
   };
 
   return (
     <>
-      <Button
-        color="secondary"
-        variant="contained"
-        onClick={handleOpen}
-        startIcon={<AddIcon />}
-      >
-        {children}
-      </Button>
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -159,9 +152,7 @@ function BugForm({ children, fetchBugs }) {
       >
         <div className={classes.paper}>
           <form className="form">
-            <Typography 
-              className="form-title"
-            >
+            <Typography className="form-title">
               <BugReportRoundedIcon />
               &nbsp;Create Issue
             </Typography>
@@ -248,33 +239,14 @@ function BugForm({ children, fetchBugs }) {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => handleClose(
-                  setStage({stage: ""}),
-                  setPriority({priority: ""}),
-                  setAssignee({assignee: ""}),
-                )}
+                onClick={handleCancel}
               >
                 Cancel
               </Button>
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() =>
-                  handleSave({
-                    title,
-                    description,
-                    stage,
-                    priority,
-                    assignee,
-                    reporter: user
-                  })
-                  .then(
-                    setStage({stage: ""}),
-                    setPriority({priority: ""}),
-                    setAssignee({assignee: ""}),
-                  )
-                  .then(handleClose)
-                }
+                onClick={handleSave}
               >
                 Save
               </Button>
