@@ -70,6 +70,7 @@ export default function Board() {
   /** load all bugs */
   React.useEffect(() => {
     fetchBugs();
+    // retrieveData();
   }, []);
 
   const handleOpen = () => {
