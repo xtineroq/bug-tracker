@@ -134,7 +134,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
         stage,
         priority,
         assignee,
-        reporter,
+        reporter: user,
       });
       fetchBugs();
       setStage({ stage: "" });
