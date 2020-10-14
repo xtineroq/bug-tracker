@@ -3,68 +3,66 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
+import Icon from "@material-ui/core/Icon";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import "./style.css";
 
-function BugCard({ issues }) {
+function BugCard({issues, handleOpen, setBugFormData}) {
+  console.log({issues});
+
+  const clickHandler = (bug) => {
+    handleOpen()
+    setBugFormData(bug)
+  }
+
   return (
     <>
-      {/* if State array is not empty proceed to mapping */}
       {issues.map((bug) => {
         return (
-          <Card className="card-root" key={bug._id}>
+          <Card
+            className="card-root"
+            key={bug._id}
+            onClick={() => clickHandler(bug)}
+          >
             <CardContent>
-              <Typography
-                className="title"
-                gutterBottom
-                style={{ fontSize: "14px" }}
-              >
-                {bug.title}
-              </Typography>
-              <Typography
-                className="desc"
-                color="textSecondary"
-                component="p"
-                style={{ fontSize: "12px" }}
-              >
-                {bug.description}
-              </Typography>
-              <Typography
-                color="textSecondary"
-                component="p"
-                style={{ fontSize: "12px" }}
-              >
-                {bug.stage}
-              </Typography>
-              <Typography
-                color="textSecondary"
-                component="p"
-                style={{ fontSize: "12px" }}
-              >
-                {bug.priority}
-              </Typography>
-              <Typography
-                color="textSecondary"
-                component="p"
-                style={{ fontSize: "12px" }}
-              >
-                {bug.assignee}
-              </Typography>
-              <Typography
-                color="textSecondary"
-                component="p"
-                style={{ fontSize: "12px" }}
-              >
-                {bug.reporter}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <IconButton style={{ width: "30px", height: "30px" }}>
-                <EditIcon />
-              </IconButton>
-            </CardActions>
-          </Card>
+            <Typography className="bug-title" gutterBottom>
+              {bug.title}
+            </Typography>
+            <Typography
+              className="card-text"
+              color="textSecondary"
+              component="p"
+            >
+              {bug.description}
+            </Typography>
+            <Typography
+              className="card-text"
+              color="textSecondary"
+              component="p"
+            >
+              {bug.priority}
+            </Typography>
+            <Typography
+              className="card-text"
+              color="textSecondary"
+              component="p"
+            >
+              Assigned to: <span className="card-users">{bug.assignee}</span>
+            </Typography>
+            <Typography
+              className="card-text"
+              color="textSecondary"
+              component="p"
+            >
+              Reported by: <span className="card-users">{bug.reporter}</span>
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Icon className="circle-icon">
+              <FiberManualRecordIcon />
+            </Icon>
+          </CardActions>
+        </Card>
         );
       })}
     </>
