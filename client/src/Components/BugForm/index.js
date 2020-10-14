@@ -10,10 +10,11 @@ import Box from "@material-ui/core/Box";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import "./style.css";
-import Axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import BugReportRoundedIcon from "@material-ui/icons/BugReportRounded";
+import Axios from "axios";
 import { AuthContext } from "../../Context/Auth";
+import API from "../../utils/API";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -61,14 +62,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
-    console.log(bugFormData)
   const { user } = React.useContext(AuthContext);
   const classes = useStyles();
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [stage, setStage] = React.useState("");
-  const [priority, setPriority] = React.useState("");
-  const [assignee, setAssignee] = React.useState("");
+  let [title, setTitle] = React.useState("");
+  let [description, setDescription] = React.useState("");
+  let [stage, setStage] = React.useState("");
+  let [priority, setPriority] = React.useState("");
+  let [assignee, setAssignee] = React.useState("");
+  let [reporter, setReporter] = React.useState(user);
   const [assigneeList, setAssigneeList] = React.useState([]);
 
   React.useEffect(() => {
@@ -85,6 +86,16 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
     }
     fetchAssignees();
   }, []);
+
+  /** display data from db to bugForm when bugCard is clicked */
+  React.useEffect(() => {
+    setTitle(bugFormData.title);
+    setDescription(bugFormData.description);
+    setStage(bugFormData.stage);
+    setPriority(bugFormData.priority);
+    setAssignee(bugFormData.assignee);
+    setReporter(bugFormData.reporter);
+  }, [bugFormData]);
 
   const handleTitleInput = (event) => {
     setTitle(event.target.value);
@@ -107,24 +118,17 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
   };
 
   const handleCancel = () => {
-    handleClose()
-    setStage({ stage: "" })
-    setPriority({ priority: "" })
-    setAssignee({ assignee: "" })
-  }
+    handleClose();
+    setStage({ stage: "" });
+    setPriority({ priority: "" });
+    setAssignee({ assignee: "" });
+  };
 
-  /** Form submit handler */
-  const handleSave = async ({
-    title,
-    description,
-    stage,
-    priority,
-    assignee,
-    reporter,
-  }) => {
+  /** Form save handler */
+  const handleSave = async () => {
     /** Send bug form data to server */
     try {
-      await Axios.post("/bugs", {
+      await API.saveBug({
         title,
         description,
         stage,
@@ -136,6 +140,25 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
       setStage({ stage: "" });
       setPriority({ priority: "" });
       setAssignee({ assignee: "" });
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /** Form update handler */
+  const handleUpdate = async () => {
+    /** Send bug form data to server */
+    try {
+      await API.updateBug(bugFormData._id, {
+        title,
+        description,
+        stage,
+        priority,
+        assignee,
+        reporter,
+      });
+      fetchBugs();
       handleClose();
     } catch (error) {
       console.log(error);
@@ -164,6 +187,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               id="title"
               label="Issue Summary"
               name="title"
+              value={title}
               onChange={handleTitleInput}
               autoFocus
             />
@@ -175,6 +199,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               name="description"
               onChange={handleDescriptionInput}
               id="description"
+              value={description}
               placeholder="Detailed description of the issue"
             />
             <Box className={classes.selectGroup}>
@@ -233,7 +258,7 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               </FormControl>
             </Box>
             <Typography className={classes.reporter}>
-              Reporter: {user}
+              Reporter: {reporter}
             </Typography>
             <Box className={classes.btnBox}>
               <Button
@@ -243,13 +268,23 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
               >
                 Cancel
               </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleSave}
-              >
-                Save
-              </Button>
+              {!bugFormData.title ? (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleUpdate}
+                >
+                  Update
+                </Button>
+              )}
             </Box>
           </form>
         </div>
