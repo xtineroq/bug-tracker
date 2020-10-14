@@ -4,14 +4,22 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Icon from "@material-ui/core/Icon";
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+import API from "../../utils/API";
 import "./style.css";
 
-function BugCard({issues, handleOpen, setBugFormData}) {
+function BugCard({issues, handleOpen, setBugFormData, fetchBugs}) {
 
   const clickHandler = (bug) => {
     handleOpen()
     setBugFormData(bug)
+  }
+
+  const handleDelete = (bug) => {
+    API.deleteBug(bug._id)
+    fetchBugs();
   }
 
   return (
@@ -60,6 +68,12 @@ function BugCard({issues, handleOpen, setBugFormData}) {
             <Icon className="circle-icon">
               <FiberManualRecordIcon />
             </Icon>
+            <IconButton
+              className="circle-icon"
+              onClick={() => handleDelete(bug)}
+            >
+              <DeleteIcon />
+            </IconButton>
           </CardActions>
         </Card>
         );
