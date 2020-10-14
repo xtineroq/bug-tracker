@@ -12,9 +12,11 @@ import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import API from "../../utils/API";
 import BugForm from "../BugForm";
+import { AuthContext } from "../../Context/Auth";
 
 export default function Board() {
   /** States to store each bug data depending on status */
+  const { user } = React.useContext(AuthContext);
   const [backlogState, setBacklogState] = React.useState([]);
   const [todoState, setTodoState] = React.useState([]);
   const [inProgressState, setInProgressState] = React.useState([]);
@@ -23,7 +25,14 @@ export default function Board() {
   const [uatApprovedState, setUatApprovedState] = React.useState([]);
   const [liveState, setLiveState] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [bugFormData, setBugFormData] = React.useState(null);
+  const [bugFormData, setBugFormData] = React.useState({
+    title: "",
+    description: "",
+    stage: "",
+    assignee: "",
+    reporter: user,
+    priority: "",
+  });
 
   /** retrieve all bugs from db */
   const fetchBugs = () => {
@@ -104,48 +113,81 @@ export default function Board() {
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 BACKLOG
               </Typography>
-              <BugCard issues={backlogState} handleOpen={handleOpen} setBugFormData={setBugFormData}/>
+              <BugCard
+                issues={backlogState}
+                handleOpen={handleOpen}
+                setBugFormData={setBugFormData}
+              />
             </div>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 TO DO
               </Typography>
-              <BugCard issues={todoState} handleOpen={handleOpen} setBugFormData={setBugFormData}/>
+              <BugCard
+                issues={todoState}
+                handleOpen={handleOpen}
+                setBugFormData={setBugFormData}
+              />
             </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 IN PROGRESS
               </Typography>
-              <BugCard issues={inProgressState} handleOpen={handleOpen} setBugFormData={setBugFormData}/>
+              <BugCard
+                issues={inProgressState}
+                handleOpen={handleOpen}
+                setBugFormData={setBugFormData}
+              />
             </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 ON STAGING
               </Typography>
-              <BugCard issues={onStagingState} handleOpen={handleOpen} setBugFormData={setBugFormData}/>
+              <BugCard
+                issues={onStagingState}
+                handleOpen={handleOpen}
+                setBugFormData={setBugFormData}
+              />
             </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 READY FOR UAT
               </Typography>
-              <BugCard issues={readyUatState} handleOpen={handleOpen} setBugFormData={setBugFormData}/>
+              <BugCard
+                issues={readyUatState}
+                handleOpen={handleOpen}
+                setBugFormData={setBugFormData}
+              />
             </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 UAT APPROVED
               </Typography>
-              <BugCard issues={uatApprovedState} handleOpen={handleOpen} setBugFormData={setBugFormData}/>
+              <BugCard
+                issues={uatApprovedState}
+                handleOpen={handleOpen}
+                setBugFormData={setBugFormData}
+              />
             </Paper>
             <Paper className="panel panel-0__right-margin">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 LIVE ON PRODUCTION
               </Typography>
-              <BugCard issues={liveState} handleOpen={handleOpen} setBugFormData={setBugFormData}/>
+              <BugCard
+                issues={liveState}
+                handleOpen={handleOpen}
+                setBugFormData={setBugFormData}
+              />
             </Paper>
           </div>
         </Grid>
       </div>
-      <BugForm open={open} handleClose={handleClose} bugFormData={bugFormData}/>
+      <BugForm
+        open={open}
+        handleClose={handleClose}
+        bugFormData={bugFormData}
+        fetchBugs={fetchBugs}
+      />
       <Footer />
     </div>
   );

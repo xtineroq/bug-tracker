@@ -20,15 +20,14 @@ module.exports = {
   },
   // save bug to db
   save: (req, res) => {
-    console.log(req.body)
     Bug.create(req.body)
       .then((bug) => {
-        res.status(201).json(bug)
+        res.status(201).json(bug);
       })
       .catch((err) => {
         console.log(err);
-        res.status(422).json(err)}
-        );
+        res.status(422).json(err);
+      });
   },
   // update existing bug in db
   update: (req, res) => {
