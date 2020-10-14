@@ -29,9 +29,11 @@ function BugCard({issues, handleOpen, setBugFormData, fetchBugs}) {
           <Card
             className="card-root"
             key={bug._id}
-            onClick={() => clickHandler(bug)}
           >
-            <CardContent>
+            <CardContent
+              className="card-content"
+              onClick={() => clickHandler(bug)}
+            >
             <Typography className="bug-title" gutterBottom>
               {bug.title}
             </Typography>

@@ -81,6 +81,7 @@ export default function Board() {
   /** load all bugs */
   React.useEffect(() => {
     fetchBugs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOpen = () => {
