@@ -73,7 +73,7 @@ export default function Board() {
         setOnStagingState(onStagingList);
         setReadyUatState(readyUatList);
         setUatApprovedState(uatApprovedList);
-        setLiveState(liveState);
+        setLiveState(liveList);
       })
       .catch((err) => console.log(err));
   };
