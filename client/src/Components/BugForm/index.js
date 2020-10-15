@@ -119,9 +119,6 @@ function BugForm({ fetchBugs, open, handleClose, bugFormData }) {
 
   const handleCancel = () => {
     handleClose();
-    setStage({ stage: "" });
-    setPriority({ priority: "" });
-    setAssignee({ assignee: "" });
   };
 
   /** Form save handler */

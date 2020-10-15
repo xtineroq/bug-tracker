@@ -17,14 +17,38 @@ function BugCard({issues, handleOpen, setBugFormData, fetchBugs}) {
     setBugFormData(bug)
   }
 
-  const handleDelete = (bug) => {
-    API.deleteBug(bug._id)
+  const handleDelete = async (bug) => {
+    await API.deleteBug(bug._id);
     fetchBugs();
   }
 
   return (
     <>
       {issues.map((bug) => {
+
+      /** change the color of the circle icon depending on priority */
+      let colorSwitch =  "circle-icon";
+
+        switch (bug.priority) {
+          case "blocker" :
+            colorSwitch += " red";
+            break;
+          case "critical" :
+            colorSwitch += " orange";
+            break;
+          case "major" :
+            colorSwitch += " yellow";
+            break;
+          case "minor" :
+            colorSwitch += " green";
+            break;
+          case "trivial" :
+            colorSwitch += " blue";
+            break;
+          default :
+            break;
+        }
+
         return (
           <Card
             className="card-root"
@@ -49,13 +73,6 @@ function BugCard({issues, handleOpen, setBugFormData, fetchBugs}) {
               color="textSecondary"
               component="p"
             >
-              {bug.priority}
-            </Typography>
-            <Typography
-              className="card-text"
-              color="textSecondary"
-              component="p"
-            >
               Assigned to: <span className="card-users">{bug.assignee}</span>
             </Typography>
             <Typography
@@ -67,11 +84,11 @@ function BugCard({issues, handleOpen, setBugFormData, fetchBugs}) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Icon className="circle-icon">
+            <Icon className={colorSwitch}>
               <FiberManualRecordIcon />
             </Icon>
             <IconButton
-              className="circle-icon"
+              className="delete-icon"
               onClick={() => handleDelete(bug)}
             >
               <DeleteIcon />
