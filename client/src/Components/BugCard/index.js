@@ -17,8 +17,8 @@ function BugCard({issues, handleOpen, setBugFormData, fetchBugs}) {
     setBugFormData(bug)
   }
 
-  const handleDelete = (bug) => {
-    API.deleteBug(bug._id)
+  const handleDelete = async (bug) => {
+    await API.deleteBug(bug._id);
     fetchBugs();
   }
 
