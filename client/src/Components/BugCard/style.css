@@ -23,5 +23,30 @@
 .circle-icon {
     width: 30px;
     height: 30px;
-    color: #f50057;
+    color: grey;
+}
+
+.red {
+    color: red;
+}
+
+.orange {
+    color: orange;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.green {
+    color: green;
+}
+
+.blue {
+    color: blue;
+}
+
+.delete-icon {
+    width: 30px;
+    height: 30px;
 }
