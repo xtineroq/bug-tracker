@@ -91,7 +91,7 @@ function BugCard({issues, handleOpen, setBugFormData, fetchBugs}) {
               className="delete-icon"
               onClick={() => handleDelete(bug)}
             >
-              <DeleteIcon />
+              <DeleteIcon style={{color: "#005780"}}/>
             </IconButton>
           </CardActions>
         </Card>

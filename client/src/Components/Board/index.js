@@ -114,7 +114,7 @@ export default function Board() {
         <Grid className="panel-container">
           {/* Inner wrapper */}
           <div className="column-wrapper">
-            <div className="panel">
+            <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 BACKLOG
               </Typography>
@@ -124,7 +124,7 @@ export default function Board() {
                 setBugFormData={setBugFormData}
                 fetchBugs={fetchBugs}
               />
-            </div>
+            </Paper>
             <Paper className="panel">
               <Typography className="panel-title" style={{ fontSize: "14px" }}>
                 TO DO
