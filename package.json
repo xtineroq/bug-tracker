@@ -1,8 +1,11 @@
 {
   "name": "bug-tracker",
-  "version": "1.0.0",
-  "description": "to follow",
-  "main": "index.js",
+  "version": "1.1.0",
+  "description": "",
+  "engines": {
+    "node": ">=12.18.4"
+  },
+  "main": "server.js",
   "scripts": {
     "start": "cd server && npm run start:prod",
     "test": "none",
@@ -14,7 +17,7 @@
     "url": "git+https://github.com/xtineroq/bug-tracker.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/xtineroq/bug-tracker/issues"
   },
