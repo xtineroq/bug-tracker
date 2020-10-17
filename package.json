@@ -1,0 +1,22 @@
+{
+  "name": "bug-tracker",
+  "version": "1.0.0",
+  "description": "to follow",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server && npm run start:prod",
+    "test": "none",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xtineroq/bug-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xtineroq/bug-tracker/issues"
+  },
+  "homepage": "https://github.com/xtineroq/bug-tracker#readme"
+}
