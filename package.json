@@ -2,6 +2,9 @@
   "name": "bug-tracker",
   "version": "1.1.0",
   "description": "",
+  "engines": {
+    "node": "12.18.4"
+  },
   "main": "server.js",
   "scripts": {
     "start": "cd server && npm run start:prod",
