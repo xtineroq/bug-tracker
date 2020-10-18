@@ -7,6 +7,7 @@ const { firebaseAdminInitializeApp } = require("./service/firebase");
 const router = require("./routes");
 const mongoose = require("mongoose");
 const path = require("path");
+const { expressCspHeader, INLINE, NONE, SELF } = require("express-csp-header");
 
 /** Load environment variables */
 require("dotenv").config();
@@ -29,6 +30,19 @@ app.use(compress());
 
 /** Secure apps by setting various HTTP headers*/
 app.use(helmet());
+app.use(
+  expressCspHeader({
+    directives: {
+      "default-src": [SELF],
+      "connect-src": [SELF, "googleapis.com", "*.googleapis.com"],
+      "script-src": [SELF, " googleapis.com", "*.googleapis.com"],
+      "style-src": [SELF, INLINE],
+      "img-src": [SELF, "data:"],
+      "worker-src": [NONE],
+      "block-all-mixed-content": true,
+    },
+  })
+);
 
 /** Enable CORS - Cross Origin Resource Sharing */
 app.use(cors());
