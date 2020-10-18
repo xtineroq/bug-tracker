@@ -65,4 +65,4 @@ How the app looks on mobile:
 ![mobile-form-image](./client/src/Images/screenshots/mobile-form.png)
 
 ## Deployed Application
-[View on Heroku](#)
+[View on Heroku](https://trace-bug-tracker.herokuapp.com/)
