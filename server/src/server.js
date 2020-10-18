@@ -4,9 +4,9 @@ const compress = require("compression");
 const cors = require("cors");
 const helmet = require("helmet");
 const { firebaseAdminInitializeApp } = require("./service/firebase");
-const { firebaseLoginRequired } = require("./middleware/auth");
 const router = require("./routes");
 const mongoose = require("mongoose");
+const path = require("path");
 
 /** Load environment variables */
 require("dotenv").config();
@@ -33,8 +33,16 @@ app.use(helmet());
 /** Enable CORS - Cross Origin Resource Sharing */
 app.use(cors());
 
+/** Static files */
+const clientBuildPath = path.join(__dirname, "build");
+app.use(express.static(clientBuildPath));
+
 /** Attach route */
 app.use(router);
+
+app.get("/*", function (_, res) {
+  res.sendFile(path.join(clientBuildPath, "index.html"));
+});
 
 /** Connected to MongoDB Atlas */
 mongoose.connect("mongodb://localhost/bugTracker", {

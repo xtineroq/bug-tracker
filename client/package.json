@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "engines": {
-    "node": ">=12.18.4"
+    "node": "12.18.4"
   },
   "proxy": "http://localhost:5000",
   "private": true,
