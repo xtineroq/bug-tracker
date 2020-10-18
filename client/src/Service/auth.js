@@ -5,8 +5,14 @@ import axios from "axios";
 
 const ERROR_MSG = "Something went wrong.";
 
-const logIn = (email, password) =>
-  firebase.auth().signInWithEmailAndPassword(email, password);
+const logIn = async (email, password) => {
+  try {
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    console.log("ERROR::login", error);
+    throw error;
+  }
+};
 
 const signUp = async ({ email, password, username, role }) => {
   try {
@@ -20,6 +26,7 @@ const signUp = async ({ email, password, username, role }) => {
     // Log in the user
     await logIn(email, password);
   } catch (error) {
+    console.log("ERROR:::signup:login", error);
     let errorMSG = ERROR_MSG;
 
     /** Get the error (4xx, 5xx) response */

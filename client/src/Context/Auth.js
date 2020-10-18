@@ -119,7 +119,7 @@ export default ({ children }) => {
       await logIn(email, password);
       dispatch({ type: LOADING, payload: false });
     } catch (error) {
-      console.log(error)
+      console.log("ERROR:::loginHandler", error);
       dispatch({
         type: LOGIN_FAILED,
       });
@@ -138,6 +138,7 @@ export default ({ children }) => {
       await signUp({ email, password, username, role });
       dispatch({ type: LOADING, payload: false });
     } catch (error) {
+      console.log("ERROR:::signupHandler", error);
       dispatch({
         type: SIGNUP_FAILED,
         payload: error,

@@ -54,6 +54,9 @@ app.use(express.static(clientBuildPath));
 /** Attach route */
 app.use(router);
 
+/** Send every other request to the React app
+ * Define any API route before this runs
+ */
 app.get("/*", function (_, res) {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
