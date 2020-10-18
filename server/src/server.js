@@ -45,7 +45,7 @@ app.get("/*", function (_, res) {
 });
 
 /** Connected to MongoDB Atlas */
-mongoose.connect("mongodb://localhost/bugTracker", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/bugTracker", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
