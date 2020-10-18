@@ -12,7 +12,6 @@
     "start": "node src/server.js",
     "start:dev": "nodemon --inspect=9299 ./src/server.js",
     "start:other": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "seed": "node scripts/seedDB.js",
     "heroku-postbuild": "npm run build"
   },
   "author": "Maria Christine Roque",
@@ -32,7 +31,6 @@
     "helmet": "^4.1.1",
     "if-env": "^1.0.4",
     "mongoose": "^5.3.16",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.5"
+    "morgan": "^1.10.0"
   }
 }
