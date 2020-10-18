@@ -57,11 +57,12 @@ Please direct all questions to:
 📧 mcroque89@gmail.com
 
 ## Screenshots
-To follow
-<!-- ![main-page](./client/src/assets/screenshots/main.png)
-![search-page](./client/src/assets/screenshots/search.png)
-![modal-page](./client/src/assets/screenshots/modal.png)
-![saved-page](./client/src/assets/screenshots/saved-page.png) -->
+![board-image](./client/src/Images/screenshots/board.png)
+![form-image](./client/src/Images/screenshots/form.png)
+
+How the app looks on mobile:
+![mobile-board-image](./client/src/Images/screenshots/mobile-board.png)
+![mobile-form-image](./client/src/Images/screenshots/mobile-form.png)
 
 ## Deployed Application
 [View on Heroku](#)
