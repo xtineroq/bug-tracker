@@ -54,7 +54,6 @@ Please direct all questions to:
 
 👤 https://github.com/xtineroq
 
-📧 mcroque89@gmail.com
 
 ## Screenshots
 ![board-image](./client/src/Images/screenshots/board.png)
